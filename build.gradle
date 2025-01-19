@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'gg.jte.gradle' version '3.1.16'
+    id 'com.diffplug.spotless' version '7.0.0.BETA4'
+    id 'org.graalvm.buildtools.native' version '0.10.4'
+}
+
+group = 'io.github.gadnex'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'gg.jte:jte-spring-boot-starter-3:3.1.16'
+    implementation 'io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3'
+    implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.1.0-SNAPSHOT'
+    jteGenerate 'gg.jte:jte-native-resources:3.1.16'
+    runtimeOnly 'org.webjars.npm:picocss__pico:2.0.6'
+    runtimeOnly 'org.webjars.npm:material-icons-font:2.1.0'
+    runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.1'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+jte {
+    generate()
+    binaryStaticContent = true
+    jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
+}
+
+jar {
+    dependsOn precompileJte
+    from fileTree("jte-classes") {
+        include "**/*.class"
+        include "**/*.bin" // Only required if you use binary templates
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+        target 'src/*/java/**/*.java'
+    }
+}

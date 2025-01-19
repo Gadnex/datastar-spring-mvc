@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: datastar-spring-mvc
+  threads:
+    virtual:
+      enabled: false
+
+gg:
+  jte:
+    usePrecompiledTemplates: true
+    localizer:
+      inject: true
+
+logging:
+  level:
+    '[org.apache.catalina.core.ContainerBase]': OFF

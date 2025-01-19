@@ -1,0 +1,25 @@
+nav>h1 {
+    margin-bottom: 0;
+    padding-top: 10px;
+}
+
+#connections {
+    background-color: #018CD4;
+    color: white;
+    border: 0.1rem solid white;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.8rem;
+}
+
+.hidden {
+    display: none;
+}
+
+#counter article {
+    background-color: #018CD4;
+    color: white;
+    border: 0.2rem solid black;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 10rem;
+}
