@@ -37,12 +37,11 @@ public class HomeController {
 
   @PostMapping("counter")
   @ResponseStatus(HttpStatus.OK)
-  public Void counter(@RequestBody CounterRequest counterRequest) {
+  public void counter(@RequestBody CounterRequest counterRequest) {
     // We already have an open SSE emitter from the method above that
     // will stream the results to the browser.
     // The worker is called to do the real work asynchronously.
     counterWorker.count(counterRequest);
-    return null;
   }
 
   @GetMapping("error")
