@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'gg.jte:jte-spring-boot-starter-3:3.1.16'
     implementation 'io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3'
-    implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.1.0'
+    implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.1.1'
     jteGenerate 'gg.jte:jte-native-resources:3.1.16'
     runtimeOnly 'org.webjars.npm:picocss__pico:2.0.6'
     runtimeOnly 'org.webjars.npm:material-icons-font:2.1.0'

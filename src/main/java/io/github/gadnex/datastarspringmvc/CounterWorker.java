@@ -101,10 +101,10 @@ public class CounterWorker {
       for (Locale localeFromConnections : connectionsByLocale.keySet()) {
         try {
           datastar
-              .mergeFragments(connectionsByLocale.get(localeFromConnections), localeFromConnections)
+              .mergeFragments(connectionsByLocale.get(localeFromConnections))
               .settleDuration(500)
               .useViewTransition(true)
-              .template("counter/Counter")
+              .template("counter/Counter", localeFromConnections)
               .attribute("counter", i)
               .emit();
           emitCounter = emitCounter + connectionsByLocale.get(localeFromConnections).size();
