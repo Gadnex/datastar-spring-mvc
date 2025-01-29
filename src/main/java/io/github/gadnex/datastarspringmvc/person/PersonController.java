@@ -22,7 +22,6 @@ public class PersonController {
   @PostMapping("add-person")
   public String addPerson(@Valid Person person, BindingResult bindingResult, Model model) {
     if (bindingResult.hasErrors()) {
-      model.addAttribute("person", person);
       model.addAttribute("result", bindingResult);
       return "person/AddPerson";
     }
