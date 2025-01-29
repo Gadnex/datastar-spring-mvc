@@ -11,16 +11,16 @@
     <form action="/add-person" method="post">
         @if(result == null)
             <label>
-                Name
+                ${localizer.localize("Person.field.name")}
                 <input name="name">
             </label>
             <label>
-                Email
+                ${localizer.localize("Person.field.email")}
                 <input type="email" name="email">
             </label>
         @else
             <label>
-                Name
+                ${localizer.localize("Person.field.name")}
                 @if(result.getFieldError("name") != null)
                     <input name="name" value="${person.name()}" aria-invalid="true">
                     <small>${result.getFieldError("name").getDefaultMessage()}</small>
@@ -29,7 +29,7 @@
                 @endif
             </label>
             <label>
-                Email
+                ${localizer.localize("Person.field.email")}
                 @if(result.getFieldError("email") != null)
                     <input name="email" value="${person.email()}" aria-invalid="true">
                     <small>${result.getFieldError("email").getDefaultMessage()}</small>
