@@ -29,7 +29,7 @@ public class CounterWorker {
 
   private long emitCounter;
 
-  public CounterWorker(Datastar Datastar) {
+  public CounterWorker(final Datastar Datastar) {
     this.datastar = Datastar;
     connections = new ConcurrentHashMap<>();
 
