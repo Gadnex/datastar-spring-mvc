@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -47,12 +46,10 @@ public class PersonController {
 
   @PostMapping(value = "data-star/add-person")
   public SseEmitter addPersonDatastar(
-      @ModelAttribute @Valid Person person,
+      @Valid Person person,
       BindingResult bindingResult,
       Model model,
       @RequestParam(name = "datastar", required = false) String datastarType) {
-    log.info("person: {}", person);
-    log.info("datastar: {}", datastarType);
     SseEmitter sseEmitter = new SseEmitter();
     sseEmitter.onCompletion(
         () -> {
@@ -65,15 +62,15 @@ public class PersonController {
               datastar
                   .mergeFragments(sseEmitter)
                   .template("person/AddPerson", LocaleContextHolder.getLocale())
+                  .attribute("datastar", datastarType)
+                  .attribute("person", person)
                   .attribute("result", bindingResult)
                   .emit();
             } else {
               PersonController.PERSON = person;
               if (datastarType != null && datastarType.equals("redirect")) {
-                log.info("ExecuteScript redirecting");
                 datastar.executeScript(sseEmitter).script("window.location = \"/person\"").emit();
               } else {
-                log.info("MergeFragments");
                 datastar
                     .mergeFragments(sseEmitter)
                     .template("person/Person", LocaleContextHolder.getLocale())
