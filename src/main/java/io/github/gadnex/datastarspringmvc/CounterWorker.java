@@ -102,8 +102,6 @@ public class CounterWorker {
         try {
           datastar
               .mergeFragments(connectionsByLocale.get(localeFromConnections))
-              .settleDuration(500)
-              .useViewTransition(true)
               .template("counter/Counter", localeFromConnections)
               .attribute("counter", i)
               .emit();

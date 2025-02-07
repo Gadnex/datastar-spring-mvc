@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class PersonController {
 
   private static Person PERSON;
-  private static ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
   private final Datastar datastar;
 
@@ -82,10 +82,11 @@ public class PersonController {
                     .autoRemove(true)
                     .script("history.pushState({}, \"\", \"/person\")")
                     .emit();
-                datastar
-                    .executeScript(sseEmitter)
-                    .script("window.onpopstate = function(event) { location.reload(); }")
-                    .emit();
+                //                datastar
+                //                    .executeScript(sseEmitter)
+                //                    .script("window.onpopstate = function(event) {
+                // location.reload(); }")
+                //                    .emit();
               }
             }
           } catch (EmitException ex) {

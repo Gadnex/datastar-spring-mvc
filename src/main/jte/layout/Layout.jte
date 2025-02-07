@@ -28,5 +28,8 @@
 <main class="container">
     ${content}
 </main>
+<script>
+    window.onpopstate = function(event) { location.reload(); }
+</script>
 </body>
 </html>
