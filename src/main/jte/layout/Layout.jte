@@ -10,13 +10,13 @@
     <meta charset="UTF-8">
     <title>${localizer.localize("application")}</title>
     <link rel="stylesheet"
-          href="/webjars/picocss__pico/2.0.6/css/pico.min.css">
+          href="/webjars/picocss__pico/css/pico.min.css">
     <link rel="stylesheet"
-          href="/webjars/picocss__pico/2.0.6/css/pico.colors.min.css">
+          href="/webjars/picocss__pico/css/pico.colors.min.css">
     <link rel="stylesheet"
-          href="/webjars/material-icons-font/2.1.0/material-icons-font.css">
+          href="/webjars/material-icons-font/material-icons-font.css">
     <link rel="stylesheet" href="/style.css">
-    <script type="module" src="/webjars/starfederation__datastar/1.0.0-beta.2/dist/datastar.js"></script>
+    <script type="module" src="/webjars/starfederation__datastar/dist/datastar.js"></script>
 </head>
 <body>
 <header class="container-fluid pico-background-azure-750">
