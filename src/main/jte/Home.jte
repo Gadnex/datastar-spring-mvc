@@ -4,6 +4,7 @@
 
 @template.layout.Layout(localizer = localizer, content = @`
     <div data-signals="{
+        counting: false,
         countTo: 1000
     }">
     </div>
