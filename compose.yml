@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  jte-demo:
+  datastar-spring-mvc:
     image: datastar-spring-mvc:0.0.1-SNAPSHOT
     ports:
       - 8080:8080
