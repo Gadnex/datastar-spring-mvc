@@ -37,7 +37,7 @@ dependencies {
     implementation 'org.webjars:webjars-locator-lite:1.0.1'
     runtimeOnly 'org.webjars.npm:picocss__pico:2.0.6'
     runtimeOnly 'org.webjars.npm:material-icons-font:2.1.0'
-    runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.8'
+    runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.9'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
