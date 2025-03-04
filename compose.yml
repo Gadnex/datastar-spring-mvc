@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   datastar-spring-mvc:
     image: datastar-spring-mvc:0.0.1-SNAPSHOT

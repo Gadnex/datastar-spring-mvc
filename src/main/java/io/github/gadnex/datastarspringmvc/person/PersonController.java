@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -35,7 +36,8 @@ public class PersonController {
   }
 
   @PostMapping("add-person")
-  public String addPerson(@Valid Person person, BindingResult bindingResult, Model model) {
+  public String addPerson(
+      @ModelAttribute @Valid Person person, BindingResult bindingResult, Model model) {
     if (bindingResult.hasErrors()) {
       model.addAttribute("result", bindingResult);
       return "person/AddPersonPage";
@@ -46,7 +48,7 @@ public class PersonController {
 
   @PostMapping(value = "data-star/add-person")
   public SseEmitter addPersonDatastar(
-      @Valid Person person,
+      @ModelAttribute @Valid Person person,
       BindingResult bindingResult,
       Model model,
       @RequestParam(name = "datastar", required = false) String datastarType) {
