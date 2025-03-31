@@ -3,7 +3,7 @@ spring:
     name: datastar-spring-mvc
   threads:
     virtual:
-      enabled: false
+      enabled: true
 
 gg:
   jte:
