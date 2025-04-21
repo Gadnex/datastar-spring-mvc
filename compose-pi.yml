@@ -20,7 +20,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   datastar-spring-mvc:
-    image: gadnex/datastar-spring-mvc:amd64-0.0.1-SNAPSHOT
+    image: gadnex/datastar-spring-mvc:0.0.1-SNAPSHOT
     ports:
       - 9080:8080
     labels:
