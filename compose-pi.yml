@@ -1,0 +1,30 @@
+services:
+  traefik:
+    image: "traefik:v3.3"
+    container_name: "traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=gadnex@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  datastar-spring-mvc:
+    image: gadnex/datastar-spring-mvc:amd64-0.0.1-SNAPSHOT
+    ports:
+      - 9080:8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.datastar.rule=Host(`gadnex.duckdns.org`)"
+      - "traefik.http.routers.datastar.entrypoints=websecure"
+      - "traefik.http.routers.datastar.tls.certresolver=myresolver"
