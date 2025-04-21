@@ -2,6 +2,7 @@ services:
   traefik:
     image: "traefik:v3.3"
     container_name: "traefik"
+    restart: on-failure
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
@@ -21,8 +22,11 @@ services:
 
   datastar-spring-mvc:
     image: gadnex/datastar-spring-mvc:0.0.1-SNAPSHOT
+    depends_on:
+      - traefik
+    restart: on-failure
     ports:
-      - 9080:8080
+      - 8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.datastar.rule=Host(`gadnex.duckdns.org`)"
