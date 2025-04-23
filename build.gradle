@@ -1,14 +1,21 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.1'
+    id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'gg.jte.gradle' version '3.1.16'
-    id 'com.diffplug.spotless' version '7.0.0.BETA4'
-    id 'org.graalvm.buildtools.native' version '0.10.4'
+    id 'gg.jte.gradle' version '3.2.0'
+    id 'com.diffplug.spotless' version '7.0.3'
+    id 'org.graalvm.buildtools.native' version '0.10.6'
+    id 'pl.allegro.tech.build.axion-release' version '1.18.18'
+}
+
+scmVersion {
+    tag {
+        prefix.set("")
+    }
 }
 
 group = 'io.github.gadnex'
-version = '0.0.1-SNAPSHOT'
+version = scmVersion.version
 
 java {
     toolchain {
@@ -29,13 +36,18 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'gg.jte:jte-spring-boot-starter-3:3.1.16'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'gg.jte:jte-spring-boot-starter-3:3.2.0'
     implementation 'io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3'
-    implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.1.1'
-    jteGenerate 'gg.jte:jte-native-resources:3.1.16'
-    runtimeOnly 'org.webjars.npm:picocss__pico:2.0.6'
+    implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.1.2'
+    jteGenerate 'gg.jte:jte-native-resources:3.2.0'
+    implementation 'org.webjars:webjars-locator-lite:1.0.1'
+    runtimeOnly("org.webjars.npm:picocss__pico:2.1.1")
     runtimeOnly 'org.webjars.npm:material-icons-font:2.1.0'
-    runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.2'
+    runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.11'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'

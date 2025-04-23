@@ -3,6 +3,7 @@ package io.github.gadnex.datastarspringmvc;
 import io.github.gadnex.jtedatastar.Datastar;
 import io.github.gadnex.jtedatastar.EmitException;
 import io.github.gadnex.jtedatastar.MergeMode;
+import io.micrometer.core.annotation.Timed;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,7 +30,7 @@ public class CounterWorker {
 
   private long emitCounter;
 
-  public CounterWorker(Datastar Datastar) {
+  public CounterWorker(final Datastar Datastar) {
     this.datastar = Datastar;
     connections = new ConcurrentHashMap<>();
 
@@ -51,6 +52,7 @@ public class CounterWorker {
 
   // Note the @Async annotation
   @Async
+  @Timed("datastar.count")
   public void count(CounterRequest counterRequest) {
     emitCounter = 0;
     long startTime = System.currentTimeMillis();
@@ -102,8 +104,6 @@ public class CounterWorker {
         try {
           datastar
               .mergeFragments(connectionsByLocale.get(localeFromConnections))
-              .settleDuration(500)
-              .useViewTransition(true)
               .template("counter/Counter", localeFromConnections)
               .attribute("counter", i)
               .emit();
