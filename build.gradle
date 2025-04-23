@@ -5,10 +5,17 @@ plugins {
     id 'gg.jte.gradle' version '3.2.0'
     id 'com.diffplug.spotless' version '7.0.3'
     id 'org.graalvm.buildtools.native' version '0.10.6'
+    id 'pl.allegro.tech.build.axion-release' version '1.18.18'
+}
+
+scmVersion {
+    tag {
+        prefix.set("")
+    }
 }
 
 group = 'io.github.gadnex'
-version = '0.0.1-SNAPSHOT'
+version = scmVersion.version
 
 java {
     toolchain {
