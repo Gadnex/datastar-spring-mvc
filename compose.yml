@@ -1,5 +1,6 @@
 services:
   datastar-spring-mvc:
-    image: datastar-spring-mvc:0.0.1-SNAPSHOT
+    image: datastar-spring-mvc:0.1.0-SNAPSHOT
     ports:
       - 8080:8080
+      - 9080:9080
