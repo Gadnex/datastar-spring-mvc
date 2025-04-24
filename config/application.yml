@@ -5,6 +5,10 @@ spring:
       cache:
         period: 0
 
+management:
+  server:
+    port: 8080
+
 gg:
   jte:
     development-mode: true

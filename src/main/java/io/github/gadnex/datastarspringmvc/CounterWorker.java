@@ -70,30 +70,34 @@ public class CounterWorker {
   }
 
   private void disableSubmitButtonAndAddFooSignalOnAllConnectedClients() {
-    try {
-      datastar
-          .mergeSignals(connections.keySet())
-          .signal("counting", true)
-          .signal("counter", 0)
-          .signal("foo", foo)
-          .emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      try {
+        datastar
+            .mergeSignals(connections.keySet())
+            .signal("counting", true)
+            .signal("counter", 0)
+            .signal("foo", foo)
+            .emit();
+        emitCounter += connections.size();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 
   private void addProgressBarOnAllConnectedClients() {
-    try {
-      datastar
-          .mergeFragments(connections.keySet())
-          .mergeMode(MergeMode.BEFORE)
-          .selector("#counter")
-          .template("counter/ProgressBar")
-          .emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      try {
+        datastar
+            .mergeFragments(connections.keySet())
+            .mergeMode(MergeMode.BEFORE)
+            .selector("#counter")
+            .template("counter/ProgressBar")
+            .emit();
+        emitCounter += connections.size();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 
@@ -115,8 +119,21 @@ public class CounterWorker {
           log.warn("Sleep thread was interrupted", ex);
         }
       }
+      if (!connections.isEmpty()) {
+        try {
+          datastar.mergeSignals(connections.keySet()).signal("counter", i).emit();
+          emitCounter += connections.size();
+        } catch (EmitException ex) {
+          removeConnection(ex.emitters());
+        }
+      }
+    }
+  }
+
+  private void removeFooSignalFromAllConnectedClients() {
+    if (!connections.isEmpty()) {
       try {
-        datastar.mergeSignals(connections.keySet()).signal("counter", i).emit();
+        datastar.removeSignals(connections.keySet()).path("foo").emit();
         emitCounter += connections.size();
       } catch (EmitException ex) {
         removeConnection(ex.emitters());
@@ -124,57 +141,54 @@ public class CounterWorker {
     }
   }
 
-  private void removeFooSignalFromAllConnectedClients() {
-    try {
-      datastar.removeSignals(connections.keySet()).path("foo").emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
-    }
-  }
-
   private void removeProgressBarFromAllConnectedClients() {
-    try {
-      datastar.removeFragments(connections.keySet()).selector("#progress").emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      try {
+        datastar.removeFragments(connections.keySet()).selector("#progress").emit();
+        emitCounter += connections.size();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 
   private void executeScriptOnAllConnectedClientsToLogCompletion() {
-    try {
-      datastar
-          .executeScript(connections.keySet())
-          .script("console.log('Counter completed')")
-          .emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      try {
+        datastar
+            .executeScript(connections.keySet())
+            .script("console.log('Counter completed')")
+            .emit();
+        emitCounter += connections.size();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 
   private void calculatePerformanceStatisticsAndSendAsSignalToAllConnectedClients(
       CounterRequest counterRequest, long startTime, long endTime) {
-    long emitTimeMillis = endTime - startTime;
-    float emitsPerMillisecond = (float) emitCounter / emitTimeMillis;
-    int emitsPerSecond = (int) (emitsPerMillisecond * 1000);
-    int refreshRateHzPerConnection = emitsPerSecond / connections.size();
-    int maxConcurrentClientsAt60Hz = emitsPerSecond / 60;
-    try {
-      datastar
-          .mergeSignals(connections.keySet())
-          .signal("counting", false)
-          .signal("emitTimeMillis", emitTimeMillis)
-          .signal("emits", emitCounter)
-          .signal("emitsPerMillisecond", emitsPerMillisecond)
-          .signal("emitsPerSecond", emitsPerSecond)
-          .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
-          .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
-          .emit();
-      emitCounter += connections.size();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      long emitTimeMillis = endTime - startTime;
+      float emitsPerMillisecond = (float) emitCounter / emitTimeMillis;
+      int emitsPerSecond = (int) (emitsPerMillisecond * 1000);
+      int refreshRateHzPerConnection = emitsPerSecond / connections.size();
+      int maxConcurrentClientsAt60Hz = emitsPerSecond / 60;
+      try {
+        datastar
+            .mergeSignals(connections.keySet())
+            .signal("counting", false)
+            .signal("emitTimeMillis", emitTimeMillis)
+            .signal("emits", emitCounter)
+            .signal("emitsPerMillisecond", emitsPerMillisecond)
+            .signal("emitsPerSecond", emitsPerSecond)
+            .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
+            .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
+            .emit();
+        emitCounter += connections.size();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 
@@ -219,14 +233,16 @@ public class CounterWorker {
   }
 
   private void emitConnectionCount() {
-    try {
-      datastar
-          .mergeFragments(connections.keySet())
-          .template("counter/Connections")
-          .attribute("connectionCount", connections.size())
-          .emit();
-    } catch (EmitException ex) {
-      removeConnection(ex.emitters());
+    if (!connections.isEmpty()) {
+      try {
+        datastar
+            .mergeFragments(connections.keySet())
+            .template("counter/Connections")
+            .attribute("connectionCount", connections.size())
+            .emit();
+      } catch (EmitException ex) {
+        removeConnection(ex.emitters());
+      }
     }
   }
 }
