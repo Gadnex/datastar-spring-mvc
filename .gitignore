@@ -39,4 +39,9 @@ out/
 
 ### JTE ###
 /jte-classes/
-/letsencrypt
+
+### Infrastructure ###
+/infrastructure/.env
+**/letsencrypt
+/infrastructure/prometheus/data
+/infrastructure/grafana/data
