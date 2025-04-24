@@ -1402,7 +1402,9 @@
   "preload": false,
   "refresh": "",
   "schemaVersion": 41,
-  "tags": [],
+  "tags": [
+    "infrastructure"
+  ],
   "templating": {
     "list": [
       {

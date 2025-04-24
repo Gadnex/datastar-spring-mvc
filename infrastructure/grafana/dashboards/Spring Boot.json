@@ -2821,7 +2821,7 @@
   "refresh": "",
   "schemaVersion": 41,
   "tags": [
-    "app"
+    "application"
   ],
   "templating": {
     "list": [
