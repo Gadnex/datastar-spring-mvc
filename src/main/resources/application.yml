@@ -26,6 +26,9 @@ management:
   observations:
     annotations:
       enabled: true
+  otlp:
+    logging:
+      endpoint: http://loki:3100/otlp/v1/logs
 
 gg:
   jte:

@@ -35,6 +35,8 @@ services:
     container_name: datastar-spring-mvc
     depends_on:
       - traefik
+      - prometheus
+      - loki
     restart: unless-stopped
     expose:
       - 8080
@@ -78,3 +80,13 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
+
+  loki:
+    image: grafana/loki
+    container_name: loki
+    restart: unless-stopped
+    expose:
+      - 3100
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki/local-config.yaml/:/etc/loki/local-config.yaml
