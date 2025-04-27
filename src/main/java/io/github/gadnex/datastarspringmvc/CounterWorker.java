@@ -185,10 +185,14 @@ public class CounterWorker {
             .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
             .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
             .emit();
-        emitCounter += connections.size();
       } catch (EmitException ex) {
         removeConnection(ex.emitters());
       }
+      log.atInfo()
+          .addKeyValue("emits", emitCounter)
+          .addKeyValue("emitTimeMillis", emitTimeMillis)
+          .addKeyValue("emitsPerSecond", emitsPerSecond)
+          .log("Counter completed");
     }
   }
 
