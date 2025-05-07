@@ -23,3 +23,21 @@ nav>h1 {
     text-align: center;
     font-size: 10rem;
 }
+
+article.todo {
+    background-color: #d1e5fb;
+    display: flex;
+}
+
+article.todo div:first-child {
+    flex-grow: 1;
+}
+
+article.todo div:last-child {
+    display: flex;
+    gap: 0.2rem;
+}
+
+button.material-icons {
+    padding: 0.1rem;
+}
