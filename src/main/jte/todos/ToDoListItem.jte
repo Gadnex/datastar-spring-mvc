@@ -10,5 +10,6 @@
         @else
             <button class="material-icons" data-on-click="@put('/todos/${todo.id().toString()}/')">check_box_outline_blank</button>
         @endif
+        <button class="material-icons" data-on-click="@delete('/todos/${todo.id().toString()}/')">delete</button>
     </div>
 </article>
