@@ -4,6 +4,7 @@
 
 <ul>
     <li><a class="pico-background-azure-750" href="/">${localizer.localize("page.Home")}</a></li>
+    <li><a class="pico-background-azure-750" href="/todos">${localizer.localize("page.Todos")}</a></li>
     <li>
         <details class="dropdown">
             <summary>
