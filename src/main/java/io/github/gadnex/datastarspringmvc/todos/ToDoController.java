@@ -25,12 +25,11 @@ public class ToDoController {
 
   private static final Map<UUID, ToDo> TODOS = new HashMap<>();
 
-  private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
+  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
   private static final Set<SseEmitter> connections = new HashSet<>();
 
   private final Datastar datastar;
-  private final View error;
 
   @GetMapping
   public String todos(Model model) {
@@ -41,10 +40,6 @@ public class ToDoController {
   @GetMapping(value = "connect", headers = "Datastar-Request")
   public SseEmitter connect() {
     SseEmitter sseEmitter = new SseEmitter(-1L);
-    sseEmitter.onError(
-        (error) -> {
-          connections.remove(sseEmitter);
-        });
     sseEmitter.onCompletion(
         () -> {
           connections.remove(sseEmitter);
@@ -86,22 +81,31 @@ public class ToDoController {
   }
 
   private void reloadAddToDoForm(BindingResult bindingResult, SseEmitter sseEmitter) {
-    datastar
-        .mergeFragments(sseEmitter)
-        .template("todos/AddToDoForm", LocaleContextHolder.getLocale())
-        .attribute("result", bindingResult)
-        .emit();
-    sseEmitter.complete();
+    try {
+      datastar
+          .mergeFragments(sseEmitter)
+          .template("todos/AddToDoForm", LocaleContextHolder.getLocale())
+          .attribute("result", bindingResult)
+          .emit();
+    } catch (EmitException ex) {
+      log.error(ex.getMessage(), ex);
+    } finally {
+      sseEmitter.complete();
+    }
   }
 
   private void addToDoItemToAllClients(ToDo todo) {
-    datastar
-        .mergeFragments(connections)
-        .template("todos/ToDoListItem")
-        .attribute("todo", todo)
-        .selector("#todo-list")
-        .mergeMode(MergeMode.PREPEND)
-        .emit();
+    try {
+      datastar
+          .mergeFragments(connections)
+          .template("todos/ToDoListItem")
+          .attribute("todo", todo)
+          .selector("#todo-list")
+          .mergeMode(MergeMode.PREPEND)
+          .emit();
+    } catch (EmitException ex) {
+      removeConnections(ex.emitters());
+    }
   }
 
   @PutMapping(value = "/{id}/", headers = "Datastar-Request")
@@ -115,12 +119,41 @@ public class ToDoController {
           } else {
             ToDo updatedTodo = new ToDo(todo.id(), todo.text(), !todo.done());
             TODOS.put(id, updatedTodo);
-            datastar
-                .mergeFragments(connections)
-                .template("todos/ToDoListItem")
-                .attribute("todo", updatedTodo)
-                .emit();
+            try {
+              datastar
+                  .mergeFragments(connections)
+                  .template("todos/ToDoListItem")
+                  .attribute("todo", updatedTodo)
+                  .emit();
+            } catch (EmitException ex) {
+              removeConnections(ex.emitters());
+            }
           }
         });
+  }
+
+  @DeleteMapping(value = "/{id}/", headers = "Datastar-Request")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteTodo(@PathVariable(name = "id") UUID id) {
+    EXECUTOR.execute(
+        () -> {
+          ToDo todo = TODOS.get(id);
+          if (todo == null) {
+            log.atError().addKeyValue("id", id).log("ToDo with id not found");
+          } else {
+            TODOS.remove(id, todo);
+            try {
+              datastar.removeFragments(connections).selector("#todo-" + id.toString()).emit();
+            } catch (EmitException ex) {
+              removeConnections(ex.emitters());
+            }
+          }
+        });
+  }
+
+  private void removeConnections(Set<SseEmitter> sseEmitters) {
+    for (SseEmitter sseEmitter : sseEmitters) {
+      connections.remove(sseEmitter);
+    }
   }
 }
