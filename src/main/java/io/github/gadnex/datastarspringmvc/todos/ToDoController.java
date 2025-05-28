@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
@@ -25,7 +24,7 @@ public class ToDoController {
 
   private static final Map<UUID, ToDo> TODOS = new HashMap<>();
 
-  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+  private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
 
   private static final Set<SseEmitter> connections = new HashSet<>();
 
@@ -40,6 +39,10 @@ public class ToDoController {
   @GetMapping(value = "connect", headers = "Datastar-Request")
   public SseEmitter connect() {
     SseEmitter sseEmitter = new SseEmitter(-1L);
+    sseEmitter.onError(
+        (error) -> {
+          connections.remove(sseEmitter);
+        });
     sseEmitter.onCompletion(
         () -> {
           connections.remove(sseEmitter);
@@ -81,31 +84,22 @@ public class ToDoController {
   }
 
   private void reloadAddToDoForm(BindingResult bindingResult, SseEmitter sseEmitter) {
-    try {
-      datastar
-          .mergeFragments(sseEmitter)
-          .template("todos/AddToDoForm", LocaleContextHolder.getLocale())
-          .attribute("result", bindingResult)
-          .emit();
-    } catch (EmitException ex) {
-      log.error(ex.getMessage(), ex);
-    } finally {
-      sseEmitter.complete();
-    }
+    datastar
+        .mergeFragments(sseEmitter)
+        .template("todos/AddToDoForm", LocaleContextHolder.getLocale())
+        .attribute("result", bindingResult)
+        .emit();
+    sseEmitter.complete();
   }
 
   private void addToDoItemToAllClients(ToDo todo) {
-    try {
-      datastar
-          .mergeFragments(connections)
-          .template("todos/ToDoListItem")
-          .attribute("todo", todo)
-          .selector("#todo-list")
-          .mergeMode(MergeMode.PREPEND)
-          .emit();
-    } catch (EmitException ex) {
-      removeConnections(ex.emitters());
-    }
+    datastar
+        .mergeFragments(connections)
+        .template("todos/ToDoListItem")
+        .attribute("todo", todo)
+        .selector("#todo-list")
+        .mergeMode(MergeMode.PREPEND)
+        .emit();
   }
 
   @PutMapping(value = "/{id}/", headers = "Datastar-Request")
@@ -119,15 +113,11 @@ public class ToDoController {
           } else {
             ToDo updatedTodo = new ToDo(todo.id(), todo.text(), !todo.done());
             TODOS.put(id, updatedTodo);
-            try {
-              datastar
-                  .mergeFragments(connections)
-                  .template("todos/ToDoListItem")
-                  .attribute("todo", updatedTodo)
-                  .emit();
-            } catch (EmitException ex) {
-              removeConnections(ex.emitters());
-            }
+            datastar
+                .mergeFragments(connections)
+                .template("todos/ToDoListItem")
+                .attribute("todo", updatedTodo)
+                .emit();
           }
         });
   }
@@ -142,11 +132,7 @@ public class ToDoController {
             log.atError().addKeyValue("id", id).log("ToDo with id not found");
           } else {
             TODOS.remove(id, todo);
-            try {
-              datastar.removeFragments(connections).selector("#todo-" + id.toString()).emit();
-            } catch (EmitException ex) {
-              removeConnections(ex.emitters());
-            }
+            datastar.removeFragments(connections).selector("#todo-" + id.toString()).emit();
           }
         });
   }
