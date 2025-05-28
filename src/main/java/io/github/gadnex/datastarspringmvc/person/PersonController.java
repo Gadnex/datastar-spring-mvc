@@ -1,7 +1,6 @@
 package io.github.gadnex.datastarspringmvc.person;
 
 import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.EmitException;
 import jakarta.validation.Valid;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class PersonController {
 
   private static Person PERSON;
-  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+  private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
 
   private final Datastar datastar;
 
@@ -59,43 +58,38 @@ public class PersonController {
         });
     EXECUTOR.execute(
         () -> {
-          try {
-            if (bindingResult.hasErrors()) {
+          if (bindingResult.hasErrors()) {
+            datastar
+                .mergeFragments(sseEmitter)
+                .template("person/AddPerson", LocaleContextHolder.getLocale())
+                .attribute("datastar", datastarType)
+                .attribute("person", person)
+                .attribute("result", bindingResult)
+                .emit();
+          } else {
+            PersonController.PERSON = person;
+            if (datastarType != null && datastarType.equals("redirect")) {
+              datastar.executeScript(sseEmitter).script("window.location = \"/person\"").emit();
+            } else {
               datastar
                   .mergeFragments(sseEmitter)
-                  .template("person/AddPerson", LocaleContextHolder.getLocale())
-                  .attribute("datastar", datastarType)
-                  .attribute("person", person)
-                  .attribute("result", bindingResult)
+                  .template("person/Person", LocaleContextHolder.getLocale())
+                  .attribute("person", PersonController.PERSON)
+                  .attribute("fragment", true)
                   .emit();
-            } else {
-              PersonController.PERSON = person;
-              if (datastarType != null && datastarType.equals("redirect")) {
-                datastar.executeScript(sseEmitter).script("window.location = \"/person\"").emit();
-              } else {
-                datastar
-                    .mergeFragments(sseEmitter)
-                    .template("person/Person", LocaleContextHolder.getLocale())
-                    .attribute("person", PersonController.PERSON)
-                    .attribute("fragment", true)
-                    .emit();
-                datastar
-                    .executeScript(sseEmitter)
-                    .autoRemove(true)
-                    .script("history.pushState({}, \"\", \"/person\")")
-                    .emit();
-                //                datastar
-                //                    .executeScript(sseEmitter)
-                //                    .script("window.onpopstate = function(event) {
-                // location.reload(); }")
-                //                    .emit();
-              }
+              datastar
+                  .executeScript(sseEmitter)
+                  .autoRemove(true)
+                  .script("history.pushState({}, \"\", \"/person\")")
+                  .emit();
+              //                datastar
+              //                    .executeScript(sseEmitter)
+              //                    .script("window.onpopstate = function(event) {
+              // location.reload(); }")
+              //                    .emit();
             }
-          } catch (EmitException ex) {
-            log.error(ex.getMessage(), ex);
-          } finally {
-            sseEmitter.complete();
           }
+          sseEmitter.complete();
         });
     return sseEmitter;
   }

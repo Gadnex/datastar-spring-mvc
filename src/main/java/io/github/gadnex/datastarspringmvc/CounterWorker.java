@@ -1,7 +1,6 @@
 package io.github.gadnex.datastarspringmvc;
 
 import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.EmitException;
 import io.github.gadnex.jtedatastar.MergeMode;
 import io.micrometer.core.annotation.Timed;
 import java.util.HashMap;
@@ -71,33 +70,25 @@ public class CounterWorker {
 
   private void disableSubmitButtonAndAddFooSignalOnAllConnectedClients() {
     if (!connections.isEmpty()) {
-      try {
-        datastar
-            .mergeSignals(connections.keySet())
-            .signal("counting", true)
-            .signal("counter", 0)
-            .signal("foo", foo)
-            .emit();
-        emitCounter += connections.size();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar
+          .mergeSignals(connections.keySet())
+          .signal("counting", true)
+          .signal("counter", 0)
+          .signal("foo", foo)
+          .emit();
+      emitCounter += connections.size();
     }
   }
 
   private void addProgressBarOnAllConnectedClients() {
     if (!connections.isEmpty()) {
-      try {
-        datastar
-            .mergeFragments(connections.keySet())
-            .mergeMode(MergeMode.BEFORE)
-            .selector("#counter")
-            .template("counter/ProgressBar")
-            .emit();
-        emitCounter += connections.size();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar
+          .mergeFragments(connections.keySet())
+          .mergeMode(MergeMode.BEFORE)
+          .selector("#counter")
+          .template("counter/ProgressBar")
+          .emit();
+      emitCounter += connections.size();
     }
   }
 
@@ -105,64 +96,41 @@ public class CounterWorker {
     Map<Locale, Set<SseEmitter>> connectionsByLocale = groupConnectionsByLocale();
     for (int i = 1; i <= counterRequest.countTo(); i++) {
       for (Locale localeFromConnections : connectionsByLocale.keySet()) {
-        try {
-          datastar
-              .mergeFragments(connectionsByLocale.get(localeFromConnections))
-              .template("counter/Counter", localeFromConnections)
-              .attribute("counter", i)
-              .emit();
-          emitCounter = emitCounter + connectionsByLocale.get(localeFromConnections).size();
-          Thread.sleep(1);
-        } catch (EmitException ex) {
-          removeConnection(ex.emitters());
-        } catch (InterruptedException ex) {
-          log.warn("Sleep thread was interrupted", ex);
-        }
+        datastar
+            .mergeFragments(connectionsByLocale.get(localeFromConnections))
+            .template("counter/Counter", localeFromConnections)
+            .attribute("counter", i)
+            .emit();
+        emitCounter = emitCounter + connectionsByLocale.get(localeFromConnections).size();
       }
       if (!connections.isEmpty()) {
-        try {
-          datastar.mergeSignals(connections.keySet()).signal("counter", i).emit();
-          emitCounter += connections.size();
-        } catch (EmitException ex) {
-          removeConnection(ex.emitters());
-        }
+        datastar.mergeSignals(connections.keySet()).signal("counter", i).emit();
+        emitCounter += connections.size();
       }
     }
   }
 
   private void removeFooSignalFromAllConnectedClients() {
     if (!connections.isEmpty()) {
-      try {
-        datastar.removeSignals(connections.keySet()).path("foo").emit();
-        emitCounter += connections.size();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar.removeSignals(connections.keySet()).path("foo").emit();
+      emitCounter += connections.size();
     }
   }
 
   private void removeProgressBarFromAllConnectedClients() {
     if (!connections.isEmpty()) {
-      try {
-        datastar.removeFragments(connections.keySet()).selector("#progress").emit();
-        emitCounter += connections.size();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar.removeFragments(connections.keySet()).selector("#progress").emit();
+      emitCounter += connections.size();
     }
   }
 
   private void executeScriptOnAllConnectedClientsToLogCompletion() {
     if (!connections.isEmpty()) {
-      try {
-        datastar
-            .executeScript(connections.keySet())
-            .script("console.log('Counter completed')")
-            .emit();
-        emitCounter += connections.size();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar
+          .executeScript(connections.keySet())
+          .script("console.log('Counter completed')")
+          .emit();
+      emitCounter += connections.size();
     }
   }
 
@@ -174,20 +142,16 @@ public class CounterWorker {
       int emitsPerSecond = (int) (emitsPerMillisecond * 1000);
       int refreshRateHzPerConnection = emitsPerSecond / connections.size();
       int maxConcurrentClientsAt60Hz = emitsPerSecond / 60;
-      try {
-        datastar
-            .mergeSignals(connections.keySet())
-            .signal("counting", false)
-            .signal("emitTimeMillis", emitTimeMillis)
-            .signal("emits", emitCounter)
-            .signal("emitsPerMillisecond", emitsPerMillisecond)
-            .signal("emitsPerSecond", emitsPerSecond)
-            .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
-            .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
-            .emit();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar
+          .mergeSignals(connections.keySet())
+          .signal("counting", false)
+          .signal("emitTimeMillis", emitTimeMillis)
+          .signal("emits", emitCounter)
+          .signal("emitsPerMillisecond", emitsPerMillisecond)
+          .signal("emitsPerSecond", emitsPerSecond)
+          .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
+          .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
+          .emit();
       log.atInfo()
           .addKeyValue("emits", emitCounter)
           .addKeyValue("emitTimeMillis", emitTimeMillis)
@@ -229,24 +193,13 @@ public class CounterWorker {
     emitConnectionCount();
   }
 
-  private void removeConnection(Set<SseEmitter> sseEmitters) {
-    for (SseEmitter sseEmitter : sseEmitters) {
-      connections.remove(sseEmitter);
-    }
-    emitConnectionCount();
-  }
-
   private void emitConnectionCount() {
     if (!connections.isEmpty()) {
-      try {
-        datastar
-            .mergeFragments(connections.keySet())
-            .template("counter/Connections")
-            .attribute("connectionCount", connections.size())
-            .emit();
-      } catch (EmitException ex) {
-        removeConnection(ex.emitters());
-      }
+      datastar
+          .mergeFragments(connections.keySet())
+          .template("counter/Connections")
+          .attribute("connectionCount", connections.size())
+          .emit();
     }
   }
 }
