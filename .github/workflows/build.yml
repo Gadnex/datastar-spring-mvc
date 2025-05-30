@@ -22,6 +22,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: '0'
           fetch-tags: 'true'
 
       - name: Setup Java
@@ -36,7 +37,12 @@ jobs:
         run: |
           ./gradlew test
 
-      - name: Build native image
+      - name: Get current version
         shell: bash
         run: |
-          ./gradlew bootBuildImage
+          ./gradlew currentVersion
+
+#      - name: Build native image
+#        shell: bash
+#        run: |
+#          ./gradlew bootBuildImage
