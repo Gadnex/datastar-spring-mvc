@@ -26,3 +26,8 @@ jobs:
         shell: bash
         run: |
           ./gradlew test
+
+      - name: Build native image
+        shell: bash
+        run: |
+          ./gradlew bootBuildImage
