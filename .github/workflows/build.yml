@@ -1,0 +1,28 @@
+name: Build native image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_native_images:
+    name: 'Build native image ${{ matrix.platform }}'
+    strategy:
+      matrix:
+        os: [ ubuntu-24.04, ubuntu-24.04-arm ]
+        include:
+          - os: 'ubuntu-24.04'
+            platform: 'linux-amd64'
+          - os: 'ubuntu-24.04-arm'
+            platform: 'linux-arm64'
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Test
+        shell: bash
+        run: |
+          ./gradlew test
