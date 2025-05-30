@@ -52,4 +52,4 @@ jobs:
         shell: bash
         run: |
           VERSION="$(docker images --format "{{.Tag}}" gadnex/datastar-spring-mvc)"
-          docker push gadnex/datastar-spring-mvc/$VERSION
+          docker push gadnex/datastar-spring-mvc:$VERSION
