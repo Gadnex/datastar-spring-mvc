@@ -22,6 +22,12 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          cache: gradle
+
       - name: Test
         shell: bash
         run: |
