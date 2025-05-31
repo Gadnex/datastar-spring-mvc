@@ -51,5 +51,6 @@ jobs:
       - name: Push native image
         shell: bash
         run: |
-          VERSION="$(docker images --format "{{.Tag}}" gadnex/datastar-spring-mvc)"
-          docker push gadnex/datastar-spring-mvc:$VERSION-${{ matrix.platform }}
+          VERSION="$(docker images --format "{{.Tag}}" $GITHUB_REPOSITORY)"
+          docker image tag $GITHUB_REPOSITORY:$VERSION $GITHUB_REPOSITORY:$VERSION-${{ matrix.platform }}
+          docker push $GITHUB_REPOSITORY:$VERSION-${{ matrix.platform }}
