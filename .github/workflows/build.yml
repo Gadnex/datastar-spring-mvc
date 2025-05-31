@@ -1,0 +1,58 @@
+name: Build native image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_native_images:
+    name: 'Build native image ${{ matrix.platform }}'
+    strategy:
+      matrix:
+        os: [ ubuntu-24.04, ubuntu-24.04-arm ]
+        include:
+          - os: 'ubuntu-24.04'
+            platform: 'linux/amd64'
+            postfix: "amd64"
+          - os: 'ubuntu-24.04-arm'
+            platform: 'linux/arm64'
+            postfix: "arm64"
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+          fetch-tags: 'true'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Test
+        shell: bash
+        run: |
+          ./gradlew test
+
+      - name: Build native image
+        shell: bash
+        run: |
+          ./gradlew bootBuildImage
+          
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push native image
+        shell: bash
+        run: |
+          VERSION="$(docker images --format "{{.Tag}}" ${{ vars.DOCKERHUB_REPOSITORY }})"
+          docker image tag ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION-${{ matrix.postfix }}
+          docker push ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION-${{ matrix.postfix }}
