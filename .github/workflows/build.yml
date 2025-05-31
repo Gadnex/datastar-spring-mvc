@@ -51,7 +51,6 @@ jobs:
       - name: Push native image
         shell: bash
         run: |
-          REPOSITORY="gadnex/datastar-spring-mvc"
-          VERSION="$(docker images --format "{{.Tag}}" $REPOSITORY)"
-          docker image tag $REPOSITORY:$VERSION $REPOSITORY:$VERSION-${{ matrix.platform }}
-          docker push $REPOSITORY:$VERSION-${{ matrix.platform }}
+          VERSION="$(docker images --format "{{.Tag}}" ${{ vars.DOCKERHUB_REPOSITORY }})"
+          docker image tag ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION-${{ matrix.platform }}
+          docker push ${{ vars.DOCKERHUB_REPOSITORY }}:$VERSION-${{ matrix.platform }}
