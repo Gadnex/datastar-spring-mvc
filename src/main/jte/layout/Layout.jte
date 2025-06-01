@@ -16,7 +16,8 @@
     <link rel="stylesheet"
           href="/webjars/material-icons-font/material-icons-font.css">
     <link rel="stylesheet" href="/style.css">
-    <script type="module" src="/webjars/starfederation__datastar/dist/datastar.js"></script>
+<%--    <script type="module" src="/webjars/starfederation__datastar/dist/datastar.js"></script>--%>
+    <script type="module" src="/Datastar.v1.0.0-RC.11.js"></script>
 </head>
 <body>
 <header class="container-fluid pico-background-azure-750">

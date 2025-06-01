@@ -41,3 +41,7 @@ article.todo div:last-child {
 button.material-icons {
     padding: 0.1rem;
 }
+
+pre {
+    padding: 0.5rem;
+}
