@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${localizer.localize("application")}</title>
     <link rel="stylesheet"
           href="/webjars/picocss__pico/css/pico.min.css">
