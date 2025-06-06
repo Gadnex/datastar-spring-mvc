@@ -72,8 +72,8 @@ public class CounterWorker {
     if (!connections.isEmpty()) {
       datastar
           .mergeSignals(connections.keySet())
-          .signal("counting", true)
-          .signal("counter", 0)
+          .signal("_counting", true)
+          .signal("_counter", 0)
           .signal("foo", foo)
           .emit();
       emitCounter += connections.size();
@@ -104,7 +104,7 @@ public class CounterWorker {
         emitCounter = emitCounter + connectionsByLocale.get(localeFromConnections).size();
       }
       if (!connections.isEmpty()) {
-        datastar.mergeSignals(connections.keySet()).signal("counter", i).emit();
+        datastar.mergeSignals(connections.keySet()).signal("_counter", i).emit();
         emitCounter += connections.size();
       }
     }
@@ -144,13 +144,13 @@ public class CounterWorker {
       int maxConcurrentClientsAt60Hz = emitsPerSecond / 60;
       datastar
           .mergeSignals(connections.keySet())
-          .signal("counting", false)
-          .signal("emitTimeMillis", emitTimeMillis)
-          .signal("emits", emitCounter)
-          .signal("emitsPerMillisecond", emitsPerMillisecond)
-          .signal("emitsPerSecond", emitsPerSecond)
-          .signal("refreshRateHzPerConnection", refreshRateHzPerConnection)
-          .signal("maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
+          .signal("_counting", false)
+          .signal("_emitTimeMillis", emitTimeMillis)
+          .signal("_emits", emitCounter)
+          .signal("_emitsPerMillisecond", emitsPerMillisecond)
+          .signal("_emitsPerSecond", emitsPerSecond)
+          .signal("_refreshRateHzPerConnection", refreshRateHzPerConnection)
+          .signal("_maxConcurrentClientsAt60Hz", maxConcurrentClientsAt60Hz)
           .emit();
       log.atInfo()
           .addKeyValue("emits", emitCounter)
