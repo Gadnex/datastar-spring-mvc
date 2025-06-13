@@ -17,7 +17,7 @@
             data-attr-disabled="$counting">
         Submit
     </button>
-    <div data-on-load="@get('connect')"></div>
+    <div data-on-load="@get('connect', {excludeSignals: true})"></div>
     <div id="counter"></div>
     <label>
         ${localizer.localize("home.debug")}
