@@ -17,7 +17,7 @@
     <link rel="stylesheet"
           href="/webjars/material-icons-font/material-icons-font.css">
     <link rel="stylesheet" href="/style.css">
-    <script type="module" src="/webjars/starfederation__datastar/dist/datastar.js"></script>
+    <script type="module" src="/js/datastar.js"></script>
 </head>
 <body>
 <header class="container-fluid pico-background-azure-750">
@@ -29,8 +29,5 @@
 <main class="container">
     ${content}
 </main>
-<script>
-    window.onpopstate = function(event) { location.reload(); }
-</script>
 </body>
 </html>

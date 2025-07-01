@@ -1,7 +1,7 @@
 package io.github.gadnex.datastarspringmvc.todos;
 
 import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.MergeMode;
+import io.github.gadnex.jtedatastar.PatchMode;
 import jakarta.validation.Valid;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -87,7 +87,7 @@ public class ToDoController {
 
   private void reloadAddToDoForm(BindingResult bindingResult, SseEmitter sseEmitter) {
     datastar
-        .mergeFragments(sseEmitter)
+        .patchElements(sseEmitter)
         .template("todos/AddToDoForm", LocaleContextHolder.getLocale())
         .attribute("result", bindingResult)
         .emit();
@@ -96,11 +96,11 @@ public class ToDoController {
 
   private void addToDoItemToAllClients(ToDo todo) {
     datastar
-        .mergeFragments(connections)
+        .patchElements(connections)
         .template("todos/ToDoListItem")
         .attribute("todo", todo)
         .selector("#todo-list")
-        .mergeMode(MergeMode.PREPEND)
+        .patchMode(PatchMode.PREPEND)
         .emit();
   }
 
@@ -116,7 +116,7 @@ public class ToDoController {
             ToDo updatedTodo = new ToDo(todo.id(), todo.text(), !todo.done());
             TODOS.put(id, updatedTodo);
             datastar
-                .mergeFragments(connections)
+                .patchElements(connections)
                 .template("todos/ToDoListItem")
                 .attribute("todo", updatedTodo)
                 .emit();

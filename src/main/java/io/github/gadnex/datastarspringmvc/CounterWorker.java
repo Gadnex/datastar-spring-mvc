@@ -1,7 +1,7 @@
 package io.github.gadnex.datastarspringmvc;
 
 import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.MergeMode;
+import io.github.gadnex.jtedatastar.PatchMode;
 import io.micrometer.core.annotation.Timed;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,8 +36,8 @@ public class CounterWorker {
     foo = new HashMap<>();
     foo.put("int", 123);
     foo.put("long", 456L);
-    foo.put("float", 789.0f);
-    foo.put("double", 789.0d);
+    foo.put("float", 789.12f);
+    foo.put("double", 789.12d);
     foo.put("boolean", true);
     foo.put("string", "Hello World");
     Map<String, Object> bar = new HashMap<>();
@@ -71,7 +71,7 @@ public class CounterWorker {
   private void disableSubmitButtonAndAddFooSignalOnAllConnectedClients() {
     if (!connections.isEmpty()) {
       datastar
-          .mergeSignals(connections.keySet())
+          .patchSignals(connections.keySet())
           .signal("_counting", true)
           .signal("_counter", 0)
           .signal("foo", foo)
@@ -83,8 +83,8 @@ public class CounterWorker {
   private void addProgressBarOnAllConnectedClients() {
     if (!connections.isEmpty()) {
       datastar
-          .mergeFragments(connections.keySet())
-          .mergeMode(MergeMode.BEFORE)
+          .patchElements(connections.keySet())
+          .patchMode(PatchMode.BEFORE)
           .selector("#counter")
           .template("counter/ProgressBar")
           .emit();
@@ -97,29 +97,38 @@ public class CounterWorker {
     for (int i = 1; i <= counterRequest.countTo(); i++) {
       for (Locale localeFromConnections : connectionsByLocale.keySet()) {
         datastar
-            .mergeFragments(connectionsByLocale.get(localeFromConnections))
+            .patchElements(connectionsByLocale.get(localeFromConnections))
             .template("counter/Counter", localeFromConnections)
             .attribute("counter", i)
             .emit();
         emitCounter = emitCounter + connectionsByLocale.get(localeFromConnections).size();
       }
       if (!connections.isEmpty()) {
-        datastar.mergeSignals(connections.keySet()).signal("_counter", i).emit();
+        datastar.patchSignals(connections.keySet()).signal("_counter", i).emit();
         emitCounter += connections.size();
       }
+      //      try {
+      //        Thread.sleep(1000);
+      //      } catch (InterruptedException e) {
+      //        throw new RuntimeException(e);
+      //      }
     }
   }
 
   private void removeFooSignalFromAllConnectedClients() {
     if (!connections.isEmpty()) {
-      datastar.removeSignals(connections.keySet()).path("foo").emit();
+      datastar.patchSignals(connections.keySet()).signal("foo", null).emit();
       emitCounter += connections.size();
     }
   }
 
   private void removeProgressBarFromAllConnectedClients() {
     if (!connections.isEmpty()) {
-      datastar.removeFragments(connections.keySet()).selector("#progress").emit();
+      datastar
+          .patchElements(connections.keySet())
+          .patchMode(PatchMode.REMOVE)
+          .selector("#progress")
+          .emit();
       emitCounter += connections.size();
     }
   }
@@ -143,7 +152,7 @@ public class CounterWorker {
       int refreshRateHzPerConnection = emitsPerSecond / connections.size();
       int maxConcurrentClientsAt60Hz = emitsPerSecond / 60;
       datastar
-          .mergeSignals(connections.keySet())
+          .patchSignals(connections.keySet())
           .signal("_counting", false)
           .signal("_emitTimeMillis", emitTimeMillis)
           .signal("_emits", emitCounter)
@@ -196,7 +205,7 @@ public class CounterWorker {
   private void emitConnectionCount() {
     if (!connections.isEmpty()) {
       datastar
-          .mergeFragments(connections.keySet())
+          .patchElements(connections.keySet())
           .template("counter/Connections")
           .attribute("connectionCount", connections.size())
           .emit();
