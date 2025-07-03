@@ -134,7 +134,11 @@ public class ToDoController {
             log.atError().addKeyValue("id", id).log("ToDo with id not found");
           } else {
             TODOS.remove(id, todo);
-            datastar.removeFragments(connections).selector("#todo-" + id.toString()).emit();
+            datastar
+                .patchElements(connections)
+                .patchMode(PatchMode.REMOVE)
+                .selector("#todo-" + id.toString())
+                .emit();
           }
         });
   }
