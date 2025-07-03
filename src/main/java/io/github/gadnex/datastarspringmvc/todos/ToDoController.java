@@ -116,7 +116,7 @@ public class ToDoController {
             ToDo updatedTodo = new ToDo(todo.id(), todo.text(), !todo.done());
             TODOS.put(id, updatedTodo);
             datastar
-                .patchElements(connections)
+                .mergeFragments(connections)
                 .template("todos/ToDoListItem")
                 .attribute("todo", updatedTodo)
                 .emit();
