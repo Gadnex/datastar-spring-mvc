@@ -107,11 +107,6 @@ public class CounterWorker {
         datastar.patchSignals(connections.keySet()).signal("_counter", i).emit();
         emitCounter += connections.size();
       }
-      //      try {
-      //        Thread.sleep(1000);
-      //      } catch (InterruptedException e) {
-      //        throw new RuntimeException(e);
-      //      }
     }
   }
 
@@ -137,6 +132,7 @@ public class CounterWorker {
     if (!connections.isEmpty()) {
       datastar
           .executeScript(connections.keySet())
+          .autoRemove(true)
           .script("console.log('Counter completed')")
           .emit();
       emitCounter += connections.size();
