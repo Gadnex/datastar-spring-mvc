@@ -4,8 +4,7 @@
         ${connectionCount}
     </div>
 @else
-    <div id="connections"
-         class="hidden">
+    <div id="connections" class="hidden">
         ${connectionCount}
     </div>
 @endif

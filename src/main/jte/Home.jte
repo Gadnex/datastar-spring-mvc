@@ -24,8 +24,8 @@
         <input type="checkbox" data-bind="_debug">
     </label>
     <pre class="pico-background-grey-100"
-         data-text="ctx.signals.JSON()"
-         data-class-hidden="!$_debug"></pre>
+         data-class-hidden="!$_debug"
+         data-json-signals></pre>
     <label>
         ${localizer.localize("home.logCompletion")}
         <input type="checkbox" data-bind="logCompletion">

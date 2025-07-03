@@ -14,18 +14,18 @@
         @if(result == null)
             <label>
                 ${localizer.localize("Todos.text")}
-                <input name="text" data-on-datastar-sse="evt.detail.type == 'finished' && this.focus()" autofocus>
+                <input id="new-todo-text" name="text" autofocus>
             </label>
         @else
             @if(result.getFieldError("text") == null)
                 <label>
                     ${localizer.localize("Todos.text")}
-                    <input name="text" data-on-datastar-sse="evt.detail.type == 'finished' && this.focus()" autofocus>
+                    <input  id="new-todo-text" name="text" autofocus>
                 </label>
             @else
                 <label>
                     ${localizer.localize("Todos.text")}
-                    <input name="text" aria-invalid="true" data-on-datastar-sse="evt.detail.type == 'finished' && this.focus()" autofocus>
+                    <input  id="new-todo-text" name="text" aria-invalid="true" autofocus>
                     <small>${result.getFieldError("text").getDefaultMessage()}</small>
                 </label>
             @endif
