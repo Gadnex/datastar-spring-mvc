@@ -16,7 +16,7 @@
           href="/webjars/picocss__pico/css/pico.colors.min.css">
     <link rel="stylesheet"
           href="/webjars/material-icons-font/material-icons-font.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script type="module" src="/js/datastar.js"></script>
 </head>
 <body>
@@ -29,5 +29,7 @@
 <main class="container">
     ${content}
 </main>
+<div data-on-keydown__window="evt.ctrlKey && evt.key === 'ArrowUp' && @get('/chaos/on')"></div>
+<div data-on-keydown__window="evt.ctrlKey && evt.key === 'ArrowDown' && @get('/chaos/off')"></div>
 </body>
 </html>

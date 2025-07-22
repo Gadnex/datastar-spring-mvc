@@ -1,0 +1,70 @@
+{
+  "resources": [
+    "chaos.ogg",
+    "chaos.m4a",
+    "chaos.mp3",
+    "chaos.ac3"
+  ],
+  "spritemap": {
+    "arcade-retro-game-over": {
+      "start": 0,
+      "end": 1.6666666666666667,
+      "loop": false
+    },
+    "crowd-laugh": {
+      "start": 3,
+      "end": 7.1249886621315195,
+      "loop": false
+    },
+    "dog-barking-twice": {
+      "start": 9,
+      "end": 10.622925170068028,
+      "loop": false
+    },
+    "fast-rocket-whoosh": {
+      "start": 12,
+      "end": 16.747414965986394,
+      "loop": false
+    },
+    "flock-of-wild-geese": {
+      "start": 18,
+      "end": 23.2184126984127,
+      "loop": false
+    },
+    "rain-and-thunder-storm": {
+      "start": 25,
+      "end": 54,
+      "loop": false
+    },
+    "sad-game-over-trombone": {
+      "start": 55,
+      "end": 60.612857142857145,
+      "loop": false
+    },
+    "sick-man-sneeze": {
+      "start": 62,
+      "end": 62.860997732426306,
+      "loop": false
+    },
+    "small-group-cheer-and-applause": {
+      "start": 64,
+      "end": 74.59748299319727,
+      "loop": false
+    },
+    "stadium-crowd-light-applause": {
+      "start": 76,
+      "end": 87.09331065759638,
+      "loop": false
+    },
+    "transition-windy-swoosh": {
+      "start": 89,
+      "end": 92.20399092970521,
+      "loop": false
+    },
+    "vintage-telephone-ringtone": {
+      "start": 94,
+      "end": 101.38680272108843,
+      "loop": false
+    }
+  }
+}

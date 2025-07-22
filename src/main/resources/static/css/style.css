@@ -41,3 +41,31 @@ article.todo div:last-child {
 button.material-icons {
     padding: 0.1rem;
 }
+
+#soundBoard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+#soundBoard:not(:has(button)) {
+    display: block;
+    background-color: var(--pico-color-red-500);
+    border-radius: 0.3rem;
+    padding: 1rem;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+@media screen and (width<768px) {
+    #soundBoard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (width<576px) {
+    #soundBoard {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
