@@ -25,7 +25,7 @@
             @else
                 <label>
                     ${localizer.localize("Todos.text")}
-                    <input name="text" aria-invalid="true">
+                    <input name="text" aria-invalid="true" value="${result.getFieldError("text").getRejectedValue().toString()}">
                     <small>${result.getFieldError("text").getDefaultMessage()}</small>
                 </label>
             @endif
