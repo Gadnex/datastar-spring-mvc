@@ -14,18 +14,18 @@
         @if(result == null)
             <label>
                 ${localizer.localize("Todos.text")}
-                <input id="new-todo-text" name="text" autofocus>
+                <input name="text">
             </label>
         @else
             @if(result.getFieldError("text") == null)
                 <label>
                     ${localizer.localize("Todos.text")}
-                    <input  id="new-todo-text" name="text" autofocus>
+                    <input name="text">
                 </label>
             @else
                 <label>
                     ${localizer.localize("Todos.text")}
-                    <input  id="new-todo-text" name="text" aria-invalid="true" autofocus>
+                    <input name="text" aria-invalid="true" value="${result.getFieldError("text").getRejectedValue().toString()}">
                     <small>${result.getFieldError("text").getDefaultMessage()}</small>
                 </label>
             @endif
