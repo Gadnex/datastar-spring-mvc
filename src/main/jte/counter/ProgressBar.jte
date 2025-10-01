@@ -1,4 +1,4 @@
 <progress id="progress"
-          data-attr-value="$counter"
+          data-attr-value="$_counter"
           data-attr-max="$countTo">
 </progress>
