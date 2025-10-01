@@ -123,4 +123,29 @@ public class ToDoController {
           }
         });
   }
+
+  @DeleteMapping(value = "/{id}/", headers = "Datastar-Request")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteTodo(@PathVariable(name = "id") UUID id) {
+    EXECUTOR.execute(
+        () -> {
+          ToDo todo = TODOS.get(id);
+          if (todo == null) {
+            log.atError().addKeyValue("id", id).log("ToDo with id not found");
+          } else {
+            TODOS.remove(id, todo);
+            datastar
+                .patchElements(connections)
+                .patchMode(PatchMode.REMOVE)
+                .selector("#todo-" + id.toString())
+                .emit();
+          }
+        });
+  }
+
+  private void removeConnections(Set<SseEmitter> sseEmitters) {
+    for (SseEmitter sseEmitter : sseEmitters) {
+      connections.remove(sseEmitter);
+    }
+  }
 }
