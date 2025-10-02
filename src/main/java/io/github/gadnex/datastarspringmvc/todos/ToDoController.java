@@ -3,7 +3,11 @@ package io.github.gadnex.datastarspringmvc.todos;
 import io.github.gadnex.jtedatastar.Datastar;
 import io.github.gadnex.jtedatastar.PatchMode;
 import jakarta.validation.Valid;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +17,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
@@ -30,7 +40,6 @@ public class ToDoController {
   private static final Set<SseEmitter> connections = new HashSet<>();
 
   private final Datastar datastar;
-  private final View error;
 
   @GetMapping
   public String todos(Model model) {
@@ -141,11 +150,5 @@ public class ToDoController {
                 .emit();
           }
         });
-  }
-
-  private void removeConnections(Set<SseEmitter> sseEmitters) {
-    for (SseEmitter sseEmitter : sseEmitters) {
-      connections.remove(sseEmitter);
-    }
   }
 }

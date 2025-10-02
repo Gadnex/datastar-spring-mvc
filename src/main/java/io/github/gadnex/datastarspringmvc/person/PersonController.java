@@ -1,8 +1,6 @@
 package io.github.gadnex.datastarspringmvc.person;
 
 import jakarta.validation.Valid;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PersonController {
 
   private static Person PERSON;
-  private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
 
   @GetMapping("add-person")
   public String addPerson(Model model) {
