@@ -9,7 +9,7 @@
     <p>Chaos is a minigame played by players in the same room on their mobile devices.</p>
     <p>The goal of the game is to create some chaos in the room.</p>
 
-    <div data-on-load="@get('/chaos/connect')"></div>
+    <div data-init="@get('/chaos/connect')"></div>
 
     @template.chaos.ChaosMeter(playerCount = playerCount, chaosCounter = chaosCounter)
 

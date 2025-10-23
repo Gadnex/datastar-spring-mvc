@@ -29,7 +29,7 @@
 <main class="container">
     ${content}
 </main>
-<div data-on-keydown__window="evt.ctrlKey && evt.key === 'ArrowUp' && @get('/chaos/on')"></div>
-<div data-on-keydown__window="evt.ctrlKey && evt.key === 'ArrowDown' && @get('/chaos/off')"></div>
+<div data-on:keydown__window="evt.ctrlKey && evt.key === 'ArrowUp' && @get('/chaos/on')"></div>
+<div data-on:keydown__window="evt.ctrlKey && evt.key === 'ArrowDown' && @get('/chaos/off')"></div>
 </body>
 </html>

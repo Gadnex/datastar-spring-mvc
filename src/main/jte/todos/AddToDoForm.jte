@@ -8,7 +8,7 @@
 <section id="add-todo-form">
     <form action="/todos"
           method="post"
-          data-on-submit="@post('/todos', {contentType: 'form'})">
+          data-on:submit="@post('/todos', {contentType: 'form'})">
         <input type="hidden" name="id" value="${UUID.randomUUID().toString()}">
         <input type="hidden" name="done" value="false">
         @if(result == null)

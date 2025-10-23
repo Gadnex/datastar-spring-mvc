@@ -9,7 +9,7 @@
 
 @template.layout.Layout(localizer = localizer, content = @`
     <h2>${localizer.localize("page.Todos")}</h2>
-    <div data-on-load="@get('/todos/connect')"></div>
+    <div data-init="@get('/todos/connect')"></div>
     @template.todos.AddToDoForm(localizer = localizer, result = result)
     <div id="todo-list">
         @for(ToDo todo : todos)

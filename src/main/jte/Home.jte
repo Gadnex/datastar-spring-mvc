@@ -13,18 +13,18 @@
         <input data-bind="countTo">
     </label>
     <button type="submit"
-            data-on-click="@post('/counter')"
-            data-attr-disabled="$_counting">
+            data-on:click="@post('/counter')"
+            data-attr:disabled="$_counting">
         Submit
     </button>
-    <div data-on-load="@get('connect')"></div>
+    <div data-init="@get('connect')"></div>
     <div id="counter"></div>
     <label>
         ${localizer.localize("home.debug")}
         <input type="checkbox" data-bind="_debug">
     </label>
     <pre class="pico-background-grey-100"
-         data-class-hidden="!$_debug"
+         data-class:hidden="!$_debug"
          data-json-signals></pre>
     <label>
         ${localizer.localize("home.logCompletion")}
