@@ -88,6 +88,7 @@ tasks.register('bootRunDev') {
 bootBuildImage {
     imageName = "gadnex/datastar-spring-mvc:${version}"
     environment["BP_JVM_VERSION"] = "25"
+    environment["BP_NATIVE_IMAGE_BUILD_ARGUMENTS"] = "-march=compatibility"
 }
 
 spotless {
