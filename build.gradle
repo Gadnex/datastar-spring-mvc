@@ -87,6 +87,7 @@ tasks.register('bootRunDev') {
 
 bootBuildImage {
     imageName = "gadnex/datastar-spring-mvc:${version}"
+    environment["BP_JVM_VERSION"] = "25"
 }
 
 spotless {
