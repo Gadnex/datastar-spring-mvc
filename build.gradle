@@ -16,6 +16,7 @@ scmVersion {
 
 group = 'io.github.gadnex'
 version = scmVersion.version
+description = 'Sample application to experiment with Datastar'
 
 java {
     toolchain {
@@ -44,7 +45,7 @@ dependencies {
     implementation 'io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3'
     implementation 'io.github.gadnex:jte-datastar-spring-boot-starter:0.2.5'
     jteGenerate 'gg.jte:jte-native-resources:3.2.1'
-    implementation 'org.webjars:webjars-locator-lite:1.1.0'
+    implementation 'org.webjars:webjars-locator-lite:1.1.2'
     runtimeOnly("org.webjars.npm:picocss__pico:2.1.1")
     runtimeOnly 'org.webjars.npm:material-icons-font:2.1.0'
     runtimeOnly 'org.webjars.npm:starfederation__datastar:1.0.0-beta.11'
