@@ -25,7 +25,7 @@ public class ChaosController {
 
   private final Datastar datastar;
 
-  public static boolean CHAOS_ENABLED = false;
+  public static boolean CHAOS_ENABLED = true;
   private final Set<SseEmitter> players = new HashSet<>();
   private AtomicLong chaosCounter = new AtomicLong();
 
