@@ -47,7 +47,7 @@ public class ToDoController {
     return "todos/ToDoList";
   }
 
-  @GetMapping(value = "connect", headers = "Datastar-Request")
+  @GetMapping(value = "connect", headers = Datastar.REQUEST_HEADER)
   public SseEmitter connect() {
     SseEmitter sseEmitter = new SseEmitter(-1L);
     sseEmitter.onError(
@@ -79,7 +79,7 @@ public class ToDoController {
     return "redirect:/todos";
   }
 
-  @PostMapping(headers = "Datastar-Request")
+  @PostMapping(headers = Datastar.REQUEST_HEADER)
   public SseEmitter addTodoDatastar(
       @ModelAttribute @Valid ToDo todo, BindingResult bindingResult, Model model) {
     SseEmitter sseEmitter = new SseEmitter();
@@ -113,7 +113,7 @@ public class ToDoController {
         .emit();
   }
 
-  @PutMapping(value = "/{id}/", headers = "Datastar-Request")
+  @PutMapping(value = "/{id}/", headers = Datastar.REQUEST_HEADER)
   @ResponseStatus(HttpStatus.OK)
   public void toggleDone(@PathVariable(name = "id") UUID id) {
     EXECUTOR.execute(
@@ -133,7 +133,7 @@ public class ToDoController {
         });
   }
 
-  @DeleteMapping(value = "/{id}/", headers = "Datastar-Request")
+  @DeleteMapping(value = "/{id}/", headers = Datastar.REQUEST_HEADER)
   @ResponseStatus(HttpStatus.OK)
   public void deleteTodo(@PathVariable(name = "id") UUID id) {
     EXECUTOR.execute(
