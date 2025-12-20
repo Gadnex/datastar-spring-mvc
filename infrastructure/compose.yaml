@@ -14,8 +14,7 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entryPoints.websecure.address=:443
       - --certificatesresolvers.myresolver.acme.tlschallenge=true
-      #- --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.myresolver.acme.email=gadnex@gmail.com"
+      - --certificatesresolvers.myresolver.acme.email=gadnex@gmail.com
       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
       - --metrics.prometheus=true
       - --metrics.prometheus.buckets=0.100000, 0.300000, 1.200000, 5.000000
@@ -31,7 +30,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   datastar-spring-mvc:
-    image: gadnex/datastar-spring-mvc:0.1.0-SNAPSHOT
+    image: gadnex/datastar-spring-mvc:0.2.1-arm64
     container_name: datastar-spring-mvc
     depends_on:
       - traefik
