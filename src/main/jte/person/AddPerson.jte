@@ -1,6 +1,7 @@
 @import gg.jte.support.LocalizationSupport
 @import io.github.gadnex.datastarspringmvc.person.Person
 @import org.springframework.validation.BindingResult
+@import org.springframework.validation.FieldError
 
 @param LocalizationSupport localizer
 @param Person person
@@ -26,7 +27,11 @@
                         <input name="name"
                                value="${person.name()}"
                                aria-invalid="true">
-                        <small>${result.getFieldError("name").getDefaultMessage()}</small>
+                        <small>
+                        @for(FieldError fieldError : result.getFieldErrors("name"))
+                            ${fieldError.getDefaultMessage()}<br>
+                        @endfor
+                        </small>
                     @else
                         <input name="name"
                                value="${person.name()}"
@@ -39,7 +44,11 @@
                         <input name="email"
                                value="${person.email()}"
                                aria-invalid="true">
-                        <small>${result.getFieldError("email").getDefaultMessage()}</small>
+                        <small>
+                        @for(FieldError fieldError : result.getFieldErrors("email"))
+                            ${fieldError.getDefaultMessage()}<br>
+                        @endfor
+                        </small>
                     @else
                         <input name="email"
                                value="${person.email()}"
