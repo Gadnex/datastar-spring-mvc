@@ -75,17 +75,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.register('bootRunDev') {
-    group = 'application'
-    description = 'Runs the Spring Boot application with the dev profile'
-    doFirst {
-        tasks.bootRun.configure {
-            systemProperty('spring.profiles.active', 'local')
-        }
-    }
-    finalizedBy("bootRun")
-}
-
 bootBuildImage {
     imageName = "gadnex/datastar-spring-mvc:${version}"
     environment["BP_JVM_VERSION"] = "25"
