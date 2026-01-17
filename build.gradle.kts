@@ -70,7 +70,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-configure<gg.jte.gradle.JteExtension> {
+jte {
     generate()
     binaryStaticContent = true
     jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
