@@ -3,7 +3,7 @@ plugins {
     id("org.springframework.boot") version "4.0.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.graalvm.buildtools.native") version "0.11.4"
-    id("gg.jte.gradle") version "3.2.1"
+    id("gg.jte.gradle") version "3.2.2"
     id("com.diffplug.spotless") version "8.2.0"
     id("pl.allegro.tech.build.axion-release") version "1.21.1"
 }
@@ -45,10 +45,10 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     // JTE (Java Template Engine)
-    implementation("gg.jte:jte-spring-boot-starter-3:3.2.1")
+    implementation("gg.jte:jte-spring-boot-starter-3:3.2.2")
     implementation("io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3")
     implementation("io.github.gadnex:jte-datastar-spring-boot-starter:0.3.2")
-    jteGenerate("gg.jte:jte-native-resources:3.2.1")
+    jteGenerate("gg.jte:jte-native-resources:3.2.2")
 
     // WebJars
     implementation("org.webjars:webjars-locator-lite:1.1.2")
@@ -74,14 +74,6 @@ jte {
     generate()
     binaryStaticContent = true
     jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
-}
-
-tasks.jar {
-    dependsOn("precompileJte")
-    from(fileTree("jte-classes") {
-        include("**/*.class")
-        include("**/*.bin")
-    })
 }
 
 tasks.test {
