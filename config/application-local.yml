@@ -8,4 +8,4 @@ spring:
 gg:
   jte:
     development-mode: true
-    usePrecompiledTemplates: false
+    use-precompiled-templates: false
