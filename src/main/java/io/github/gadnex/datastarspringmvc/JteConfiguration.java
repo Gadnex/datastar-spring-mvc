@@ -10,6 +10,6 @@ public class JteConfiguration {
 
   @Autowired
   public void configureJteViewResolver(JteViewResolver jteViewResolver) {
-    jteViewResolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    jteViewResolver.setOrder(Ordered.LOWEST_PRECEDENCE - 5);
   }
 }
