@@ -43,9 +43,4 @@ public class HomeController {
     // The worker is called to do the real work asynchronously.
     counterWorker.count(counterRequest);
   }
-
-  @GetMapping("error")
-  public String error() {
-    return "Error";
-  }
 }
