@@ -81,7 +81,7 @@ tasks.test {
 }
 
 tasks.bootBuildImage {
-    imageName.set("gadnex/datastar-spring-mvc:${project.version}")
+    imageName.set("gadnex/${rootProject.name}:${project.version}")
     environment.put("BP_JVM_VERSION", "25")
     environment.put("BP_NATIVE_IMAGE_BUILD_ARGUMENTS", "-march=compatibility")
 }

@@ -21,7 +21,7 @@ nav>h1 {
     border: 0.2rem solid black;
     border-radius: 0.5rem;
     text-align: center;
-    font-size: 10rem;
+    font-size: clamp(6.9657rem, 5.0529rem + 8.5015vw, 11.6415rem);
 }
 
 article.todo {
