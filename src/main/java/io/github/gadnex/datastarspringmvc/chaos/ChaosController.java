@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,7 +67,7 @@ public class ChaosController {
   }
 
   @GetMapping("connect")
-  public SseEmitter connect(Model model) {
+  public @Nullable SseEmitter connect(Model model) {
     if (!CHAOS_ENABLED) {
       return null;
     }

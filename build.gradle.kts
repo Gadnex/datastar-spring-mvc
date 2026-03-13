@@ -1,7 +1,10 @@
+import net.ltgt.gradle.errorprone.errorprone
+
 plugins {
     java
     id("org.springframework.boot") version "4.0.3"
     id("io.spring.dependency-management") version "1.1.7"
+    id("io.spring.nullability") version "0.0.12"
     id("org.graalvm.buildtools.native") version "0.11.4"
     id("gg.jte.gradle") version "3.2.3"
     id("com.diffplug.spotless") version "8.2.0"
@@ -35,6 +38,14 @@ repositories {
     mavenCentral()
 }
 
+val jteVersion by extra("3.2.3")
+val jteLocalizerVersion by extra("1.0.3")
+val jteDatastarVersion by extra("0.3.3")
+val webjarsLocatorLiteVersion by extra("1.1.3")
+val picoCssVersion by extra("2.1.1")
+val materialIconsFontVersion by extra("2.1.0")
+val howlerVersion by extra("2.2.4")
+
 dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
@@ -45,16 +56,16 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     // JTE (Java Template Engine)
-    implementation("gg.jte:jte-spring-boot-starter-4:3.2.3")
-    implementation("io.github.gadnex:jte-localizer-spring-boot-starter:1.0.3")
-    implementation("io.github.gadnex:jte-datastar-spring-boot-starter:0.3.2")
-    jteGenerate("gg.jte:jte-native-resources:3.2.3")
+    implementation("gg.jte:jte-spring-boot-starter-4:$jteVersion")
+    implementation("io.github.gadnex:jte-localizer-spring-boot-starter:$jteLocalizerVersion")
+    implementation("io.github.gadnex:jte-datastar-spring-boot-starter:$jteDatastarVersion")
+    jteGenerate("gg.jte:jte-native-resources:$jteVersion")
 
     // WebJars
-    implementation("org.webjars:webjars-locator-lite:1.1.2")
-    runtimeOnly("org.webjars.npm:picocss__pico:2.1.1")
-    runtimeOnly("org.webjars.npm:material-icons-font:2.1.0")
-    runtimeOnly("org.webjars.npm:howler:2.2.4")
+    implementation("org.webjars:webjars-locator-lite:$webjarsLocatorLiteVersion")
+    runtimeOnly("org.webjars.npm:picocss__pico:$picoCssVersion")
+    runtimeOnly("org.webjars.npm:material-icons-font:$materialIconsFontVersion")
+    runtimeOnly("org.webjars.npm:howler:$howlerVersion")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")
@@ -74,6 +85,12 @@ jte {
     generate()
     binaryStaticContent = true
     jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone {
+        excludedPaths = ".*/build/generated-sources/jte/.*"
+    }
 }
 
 tasks.test {

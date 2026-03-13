@@ -2,6 +2,7 @@ package io.github.gadnex.datastarspringmvc.person;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class PersonController {
 
-  private static Person PERSON;
+  private static @Nullable Person PERSON;
 
   @GetMapping("add-person")
   public String addPerson(Model model) {
