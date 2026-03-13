@@ -84,7 +84,7 @@ public class CounterWorker {
     if (!connections.isEmpty()) {
       datastar
           .patchElements(connections.keySet())
-          .patchMode(PatchMode.BEFORE)
+          .patchMode(PatchMode.AFTER)
           .selector("#counter")
           .template("counter/ProgressBar")
           .emit();
