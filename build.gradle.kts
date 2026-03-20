@@ -2,12 +2,12 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     java
-    id("org.springframework.boot") version "4.0.3"
+    id("org.springframework.boot") version "4.0.4"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.spring.nullability") version "0.0.12"
-    id("org.graalvm.buildtools.native") version "0.11.4"
+    id("org.graalvm.buildtools.native") version "0.11.5"
     id("gg.jte.gradle") version "3.2.3"
-    id("com.diffplug.spotless") version "8.2.0"
+    id("com.diffplug.spotless") version "8.4.0"
     id("pl.allegro.tech.build.axion-release") version "1.21.1"
 }
 
