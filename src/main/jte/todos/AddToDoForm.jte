@@ -14,7 +14,7 @@
         @if(result == null)
             <label>
                 ${localizer.localize("Todos.text")}
-                <input name="text">
+                <input name="text" autofocus>
             </label>
         @else
             @if(result.getFieldError("text") == null)

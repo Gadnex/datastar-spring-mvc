@@ -14,7 +14,7 @@
             @if(result == null)
                 <label>
                     ${localizer.localize("Person.field.name")}
-                    <input name="name">
+                    <input name="name" autofocus>
                 </label>
                 <label>
                     ${localizer.localize("Person.field.email")}

@@ -10,7 +10,7 @@
     </div>
     <label>
         ${localizer.localize("home.countTo")}
-        <input data-bind="countTo">
+        <input data-bind="countTo" autofocus>
     </label>
     <button type="submit"
             data-on:click="@post('/counter')"
