@@ -2,11 +2,11 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     java
-    id("org.springframework.boot") version "4.0.5"
+    id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
-    id("io.spring.nullability") version "0.0.12"
+    id("io.spring.nullability") version "0.0.13"
     id("org.graalvm.buildtools.native") version "0.11.5"
-    id("gg.jte.gradle") version "3.2.3"
+    id("gg.jte.gradle") version "3.2.4"
     id("com.diffplug.spotless") version "8.4.0"
     id("pl.allegro.tech.build.axion-release") version "1.21.1"
 }
@@ -38,7 +38,7 @@ repositories {
     mavenCentral()
 }
 
-val jteVersion by extra("3.2.3")
+val jteVersion by extra("3.2.4")
 val jteLocalizerVersion by extra("1.0.3")
 val jteDatastarVersion by extra("0.3.3")
 val webjarsLocatorLiteVersion by extra("1.1.3")
