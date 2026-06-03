@@ -7,8 +7,8 @@ plugins {
     id("io.spring.nullability") version "0.0.13"
     id("org.graalvm.buildtools.native") version "0.11.5"
     id("gg.jte.gradle") version "3.2.4"
-    id("com.diffplug.spotless") version "8.4.0"
-    id("pl.allegro.tech.build.axion-release") version "1.21.1"
+    id("com.diffplug.spotless") version "8.6.0"
+    id("pl.allegro.tech.build.axion-release") version "1.21.2"
 }
 
 scmVersion {
@@ -40,7 +40,7 @@ repositories {
 
 val jteVersion by extra("3.2.4")
 val jteLocalizerVersion by extra("1.0.3")
-val jteDatastarVersion by extra("0.3.3")
+val jteDatastarVersion by extra("0.3.4")
 val webjarsLocatorLiteVersion by extra("1.1.3")
 val picoCssVersion by extra("2.1.1")
 val materialIconsFontVersion by extra("2.1.0")
