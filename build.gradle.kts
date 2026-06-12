@@ -2,7 +2,7 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     java
-    id("org.springframework.boot") version "4.0.6"
+    id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.spring.nullability") version "0.0.13"
     id("org.graalvm.buildtools.native") version "0.11.5"
@@ -24,12 +24,6 @@ description = "Sample application to experiment with Datastar"
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
-    }
-}
-
-configurations {
-    compileOnly {
-        extendsFrom(annotationProcessor.get())
     }
 }
 
@@ -67,10 +61,6 @@ dependencies {
     runtimeOnly("org.webjars.npm:material-icons-font:$materialIconsFontVersion")
     runtimeOnly("org.webjars.npm:howler:$howlerVersion")
 
-    // Lombok
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
     // Development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -89,12 +79,20 @@ jte {
 
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone {
+        // Exclude JTE generated classes from @NullMarked checks
         excludedPaths = ".*/build/generated-sources/jte/.*"
     }
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
+
+    // Fix for the Mockito self-attachment warning
+    val mockitoAgent = configurations.testRuntimeClasspath.get()
+        .find { it.name.contains("mockito-core") }
+    if (mockitoAgent != null) {
+        jvmArgs("-javaagent:$mockitoAgent", "-Xshare:off")
+    }
 }
 
 tasks.bootBuildImage {

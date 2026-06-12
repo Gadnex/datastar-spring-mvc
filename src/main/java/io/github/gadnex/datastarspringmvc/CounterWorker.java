@@ -3,20 +3,18 @@ package io.github.gadnex.datastarspringmvc;
 import io.github.gadnex.jtedatastar.Datastar;
 import io.github.gadnex.jtedatastar.PatchMode;
 import io.micrometer.core.annotation.Timed;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Component
-@Slf4j
 public class CounterWorker {
+
+  private static final Logger log = LoggerFactory.getLogger(CounterWorker.class);
 
   // The Datastar bean from the plugin is injected
   private final Datastar datastar;

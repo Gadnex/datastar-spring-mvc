@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
-import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
 @RequestMapping("chaos")
-@RequiredArgsConstructor
 public class ChaosController {
 
   private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
@@ -29,6 +27,10 @@ public class ChaosController {
   public static boolean CHAOS_ENABLED = true;
   private final Set<SseEmitter> players = new HashSet<>();
   private AtomicLong chaosCounter = new AtomicLong();
+
+  public ChaosController(Datastar datastar) {
+    this.datastar = datastar;
+  }
 
   @GetMapping
   public String chaos(Model model) {

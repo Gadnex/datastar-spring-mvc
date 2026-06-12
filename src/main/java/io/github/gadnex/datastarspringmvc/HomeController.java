@@ -1,7 +1,7 @@
 package io.github.gadnex.datastarspringmvc;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
-@AllArgsConstructor
-@Slf4j
 public class HomeController {
 
-  private CounterWorker counterWorker;
+  private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+
+  private final CounterWorker counterWorker;
+
+  public HomeController(CounterWorker counterWorker) {
+    this.counterWorker = counterWorker;
+  }
 
   @GetMapping
   public String home() {

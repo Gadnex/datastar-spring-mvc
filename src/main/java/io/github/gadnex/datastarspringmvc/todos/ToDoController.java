@@ -3,34 +3,21 @@ package io.github.gadnex.datastarspringmvc.todos;
 import io.github.gadnex.jtedatastar.Datastar;
 import io.github.gadnex.jtedatastar.PatchMode;
 import jakarta.validation.Valid;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
 @RequestMapping("todos")
-@RequiredArgsConstructor
-@Slf4j
 public class ToDoController {
 
   private static final Map<UUID, ToDo> TODOS = new HashMap<>();
@@ -38,8 +25,13 @@ public class ToDoController {
   private static final ExecutorService EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
 
   private static final Set<SseEmitter> connections = new HashSet<>();
+  private static final Logger log = LoggerFactory.getLogger(ToDoController.class);
 
   private final Datastar datastar;
+
+  public ToDoController(Datastar datastar) {
+    this.datastar = datastar;
+  }
 
   @GetMapping
   public String todos(Model model) {
