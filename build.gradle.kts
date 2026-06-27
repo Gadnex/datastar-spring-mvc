@@ -97,11 +97,11 @@ tasks.bootBuildImage {
     environment.put("BP_NATIVE_IMAGE_BUILD_ARGUMENTS", "-march=compatibility")
 }
 
-graalvmNative {
-    metadataRepository {
-        version.set("SNAPSHOT")
-    }
-}
+//graalvmNative {
+//    metadataRepository {
+//        version.set("SNAPSHOT")
+//    }
+//}
 
 spotless {
     java {
