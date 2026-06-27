@@ -5,9 +5,9 @@ plugins {
     id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.spring.nullability") version "0.0.13"
-    id("org.graalvm.buildtools.native") version "0.11.5"
+    id("org.graalvm.buildtools.native") version "1.1.2"
     id("gg.jte.gradle") version "3.2.4"
-    id("com.diffplug.spotless") version "8.6.0"
+    id("com.diffplug.spotless") version "8.7.0"
     id("pl.allegro.tech.build.axion-release") version "1.21.2"
 }
 
@@ -32,13 +32,13 @@ repositories {
     mavenCentral()
 }
 
-val jteVersion by extra("3.2.4")
-val jteLocalizerVersion by extra("1.0.3")
-val jteDatastarVersion by extra("0.3.4")
-val webjarsLocatorLiteVersion by extra("1.1.3")
-val picoCssVersion by extra("2.1.1")
-val materialIconsFontVersion by extra("2.1.0")
-val howlerVersion by extra("2.2.4")
+val jteVersion = "3.2.4"
+val jteLocalizerVersion = "1.0.3"
+val jteDatastarVersion = "0.3.4"
+val webjarsLocatorLiteVersion = "1.1.3"
+val picoCssVersion = "2.1.1"
+val materialIconsFontVersion = "2.1.0"
+val howlerVersion = "2.2.4"
 
 dependencies {
     // Spring Boot
@@ -99,6 +99,12 @@ tasks.bootBuildImage {
     imageName.set("gadnex/${rootProject.name}:${project.version}")
     environment.put("BP_JVM_VERSION", "25")
     environment.put("BP_NATIVE_IMAGE_BUILD_ARGUMENTS", "-march=compatibility")
+}
+
+graalvmNative {
+    metadataRepository {
+        version.set("SNAPSHOT")
+    }
 }
 
 spotless {
