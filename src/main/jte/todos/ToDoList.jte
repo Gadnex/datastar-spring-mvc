@@ -7,13 +7,15 @@
 @param BindingResult result
 @param Collection<ToDo> todos
 
-@template.layout.Layout(localizer = localizer, content = @`
-    <h2>${localizer.localize("page.Todos")}</h2>
-    <div data-init="@get('/todos/connect')"></div>
-    @template.todos.AddToDoForm(localizer = localizer, result = result)
-    <div id="todo-list">
-        @for(ToDo todo : todos)
-            @template.todos.ToDoListItem(todo = todo)
-        @endfor
+@template.layout.Layout(localizer = localizer, currentPath = "/todos", content = @`
+    <div class="stack">
+        <h2 class="text-3">${localizer.localize("page.Todos")}</h2>
+        <div data-init="@get('/todos/connect')"></div>
+        @template.todos.AddToDoForm(localizer = localizer, result = result)
+        <div id="todo-list">
+            @for(ToDo todo : todos)
+                @template.todos.ToDoListItem(todo = todo)
+            @endfor
+        </div>
     </div>
 `)

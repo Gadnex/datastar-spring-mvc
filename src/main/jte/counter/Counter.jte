@@ -4,10 +4,8 @@
 @param int counter
 
 <div id="counter">
-    <label>
-        ${localizer.localize("counter")}
-        <article>
-            ${counter}
-        </article>
-    </label>
+    <div>${localizer.localize("counter")}</div>
+    <div class="frame bg-primary-5 p-4 stack main-center cross-center">
+        <span class="counter">${counter}</span>
+    </div>
 </div>

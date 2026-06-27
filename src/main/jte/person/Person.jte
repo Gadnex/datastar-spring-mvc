@@ -4,26 +4,32 @@
 @param LocalizationSupport localizer
 @param Person person
 
-@template.layout.Layout(localizer = localizer, content = @`
-    <div id="person">
-        <h1>Person</h1>
+@template.layout.Layout(localizer = localizer, currentPath = "/person", content = @`
+    <div class="stack">
+        <h2 class="text-3">Add person</h2>
         @if(person == null)
-            <p class="pico-color-red-500">
+            <p class="">
                 No person added yet
             </p>
         @else
-            <p>
-                <label>
-                    Name
-                    <input name="name" value="${person.name()}" disabled>
-                </label>
-            </p>
-            <p>
-                <label>
-                    Email
-                    <input type="email" name="email" value="${person.email()}" disabled>
-                </label>
-            </p>
+            <div class="stack">
+                <div>
+                    <div>
+                        <label for="name">${localizer.localize("Person.field.name")}</label>
+                    </div>
+                    <div>
+                        <input id="name" name="name" value="${person.name()}" disabled>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="email">${localizer.localize("Person.field.email")}</label>
+                    </div>
+                    <div>
+                        <input type="email" id="email" name="email" value="${person.email()}" disabled>
+                    </div>
+                </div>
+            </div>
         @endif
     </div>
 `)

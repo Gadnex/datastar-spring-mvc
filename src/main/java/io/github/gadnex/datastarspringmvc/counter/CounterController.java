@@ -1,4 +1,4 @@
-package io.github.gadnex.datastarspringmvc;
+package io.github.gadnex.datastarspringmvc.counter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,20 +12,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
-public class HomeController {
+public class CounterController {
 
-  private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+  private static final Logger log = LoggerFactory.getLogger(CounterController.class);
 
   private final CounterWorker counterWorker;
 
-  public HomeController(CounterWorker counterWorker) {
+  public CounterController(CounterWorker counterWorker) {
     this.counterWorker = counterWorker;
   }
 
   @GetMapping
   public String home() {
-    // A standard Spring MVC response to render the home page to the browser.
-    return "Home";
+    return "counter/CounterPage";
   }
 
   @GetMapping("connect")

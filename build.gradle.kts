@@ -36,8 +36,6 @@ val jteVersion = "3.2.4"
 val jteLocalizerVersion = "1.0.3"
 val jteDatastarVersion = "0.3.4"
 val webjarsLocatorLiteVersion = "1.1.3"
-val picoCssVersion = "2.1.1"
-val materialIconsFontVersion = "2.1.0"
 val howlerVersion = "2.2.4"
 
 dependencies {
@@ -57,8 +55,6 @@ dependencies {
 
     // WebJars
     implementation("org.webjars:webjars-locator-lite:$webjarsLocatorLiteVersion")
-    runtimeOnly("org.webjars.npm:picocss__pico:$picoCssVersion")
-    runtimeOnly("org.webjars.npm:material-icons-font:$materialIconsFontVersion")
     runtimeOnly("org.webjars.npm:howler:$howlerVersion")
 
     // Development

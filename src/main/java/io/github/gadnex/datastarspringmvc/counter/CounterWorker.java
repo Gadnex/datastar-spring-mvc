@@ -1,4 +1,4 @@
-package io.github.gadnex.datastarspringmvc;
+package io.github.gadnex.datastarspringmvc.counter;
 
 import io.github.gadnex.jtedatastar.Datastar;
 import io.github.gadnex.jtedatastar.PatchMode;

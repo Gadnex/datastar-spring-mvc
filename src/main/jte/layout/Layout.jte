@@ -2,6 +2,7 @@
 @import gg.jte.support.LocalizationSupport
 
 @param LocalizationSupport localizer
+@param String currentPath
 @param Content content 
 
 <!DOCTYPE html>
@@ -10,23 +11,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${localizer.localize("application")}</title>
-    <link rel="stylesheet"
-          href="/webjars/picocss__pico/css/pico.min.css">
-    <link rel="stylesheet"
-          href="/webjars/picocss__pico/css/pico.colors.min.css">
-    <link rel="stylesheet"
-          href="/webjars/material-icons-font/material-icons-font.css">
+    <link rel="stylesheet" href="/css/constellation.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script type="module" src="/js/datastar.js"></script>
 </head>
-<body>
-<header class="container-fluid pico-background-azure-750">
-    <nav>
-        <h1 class="pico-background-azure-750">${localizer.localize("application")}</h1>
-        @template.layout.Menu(localizer = localizer)
-    </nav>
+<body class="fullscreen center p-0">
+<header class="cluster main-space-between cross-center container p-4 bg-primary-2">
+    <h1 class="mobile-grow text-3 text-center">${localizer.localize("application")}</h1>
+    @template.layout.Menu(localizer = localizer, currentPath = currentPath)
 </header>
-<main class="container">
+<main class="p-4">
     ${content}
 </main>
 <div data-on:keydown__window="evt.ctrlKey && evt.key === 'ArrowUp' && @get('/chaos/on')"></div>

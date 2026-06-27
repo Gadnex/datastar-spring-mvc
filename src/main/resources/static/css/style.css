@@ -1,71 +1,15 @@
-nav>h1 {
-    margin-bottom: 0;
-    padding-top: 10px;
-}
-
-#connections {
-    background-color: #018CD4;
-    color: white;
-    border: 0.1rem solid white;
-    border-radius: 0.5rem;
-    padding: 0.2rem 0.8rem;
-}
-
 .hidden {
     display: none;
 }
 
-#counter article {
-    background-color: #018CD4;
-    color: white;
-    border: 0.2rem solid black;
-    border-radius: 0.5rem;
-    text-align: center;
-    font-size: clamp(6.9657rem, 5.0529rem + 8.5015vw, 11.6415rem);
+.counter {
+    font-size: var(--size-10);
 }
 
-article.todo {
-    background-color: #d1e5fb;
-    display: flex;
+.todo-text {
+    flex-grow: 999;
 }
 
-article.todo div:first-child {
+.todo-buttons {
     flex-grow: 1;
-}
-
-article.todo div:last-child {
-    display: flex;
-    gap: 0.2rem;
-}
-
-button.material-icons {
-    padding: 0.1rem;
-}
-
-#soundBoard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-}
-
-#soundBoard:not(:has(button)) {
-    display: block;
-    background-color: var(--pico-color-red-500);
-    border-radius: 0.3rem;
-    padding: 1rem;
-    font-size: 3rem;
-    font-weight: bold;
-    color: white;
-}
-
-@media screen and (width<768px) {
-    #soundBoard {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media screen and (width<576px) {
-    #soundBoard {
-        grid-template-columns: repeat(1, 1fr);
-    }
 }
