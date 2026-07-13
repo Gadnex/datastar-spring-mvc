@@ -5,7 +5,7 @@ plugins {
     id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.spring.nullability") version "0.0.14"
-    id("org.graalvm.buildtools.native") version "1.1.2"
+    id("org.graalvm.buildtools.native") version "1.1.4"
     id("gg.jte.gradle") version "3.2.4"
     id("com.diffplug.spotless") version "8.8.0"
     id("pl.allegro.tech.build.axion-release") version "1.21.2"
@@ -96,12 +96,6 @@ tasks.bootBuildImage {
     environment.put("BP_JVM_VERSION", "25")
     environment.put("BP_NATIVE_IMAGE_BUILD_ARGUMENTS", "-march=compatibility")
 }
-
-//graalvmNative {
-//    metadataRepository {
-//        version.set("SNAPSHOT")
-//    }
-//}
 
 spotless {
     java {

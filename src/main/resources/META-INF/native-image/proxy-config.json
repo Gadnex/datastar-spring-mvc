@@ -1,6 +1,0 @@
-[
-  [
-    "org.hibernate.validator.internal.util.logging.Log",
-    "org.jboss.logging.BasicLogger"
-  ]
-]
