@@ -21,14 +21,24 @@
                     <label for="count-to">${localizer.localize("counter.countTo")}</label>
                 </div>
                 <div>
-                    <input type="number" min="1" max="10000" id="count-to" data-bind="countTo" class="w-full" autofocus>
+                    <input type="number" min="1" max="10000" id="count-to"
+                           data-bind="countTo"
+                           data-on:keydown__debounce.500ms="@post('/counter/validate')"
+                           data-attr:aria-invalid="$_invalidCountTo + ''"
+                           class="w-full" autofocus>
+                    <ul data-signals:_invalid-count-to="false"
+                        data-show="$_invalidCountTo"
+                        style="display: none;">
+                        <li>Must be greater than 0</li>
+                        <li>Must be less than or equal to 10 000</li>
+                    </ul>
                 </div>
             </div>
             <div class="cluster main-end">
                 <button type="submit"
                         class="primary"
                         data-on:click="@post('/counter')"
-                        data-attr:disabled="$_counting">
+                        data-attr:disabled="$_counting || $_invalidCountTo">
                     Submit
                 </button>
             </div>
