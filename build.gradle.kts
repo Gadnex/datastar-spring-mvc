@@ -2,13 +2,13 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     java
-    id("org.springframework.boot") version "4.1.0"
+    id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
-    id("io.spring.nullability") version "0.0.13"
-    id("org.graalvm.buildtools.native") version "1.1.2"
+    id("org.graalvm.buildtools.native") version "1.1.8"
+    id("io.spring.nullability") version "0.0.15"
     id("gg.jte.gradle") version "3.2.4"
-    id("com.diffplug.spotless") version "8.7.0"
-    id("pl.allegro.tech.build.axion-release") version "1.21.2"
+    id("com.diffplug.spotless") version "8.10.0"
+    id("pl.allegro.tech.build.axion-release") version "1.21.3"
 }
 
 scmVersion {
@@ -35,7 +35,7 @@ repositories {
 val jteVersion = "3.2.4"
 val jteLocalizerVersion = "1.0.3"
 val jteDatastarVersion = "0.3.4"
-val webjarsLocatorLiteVersion = "1.1.3"
+val webjarsLocatorLiteVersion = "1.1.4"
 val howlerVersion = "2.2.4"
 
 dependencies {
@@ -96,12 +96,6 @@ tasks.bootBuildImage {
     environment.put("BP_JVM_VERSION", "25")
     environment.put("BP_NATIVE_IMAGE_BUILD_ARGUMENTS", "-march=compatibility")
 }
-
-//graalvmNative {
-//    metadataRepository {
-//        version.set("SNAPSHOT")
-//    }
-//}
 
 spotless {
     java {
