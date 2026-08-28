@@ -28,7 +28,7 @@
                            class="w-full" autofocus>
                     <ul data-signals:_invalid-count-to="false"
                         data-show="$_invalidCountTo"
-                        style="display: none;">
+                        class="display-none">
                         <li>Must be greater than 0</li>
                         <li>Must be less than or equal to 10 000</li>
                     </ul>
