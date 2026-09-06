@@ -1,10 +1,11 @@
 @import gg.jte.support.LocalizationSupport
 @import io.github.gadnex.datastarspringmvc.person.Person
 
+@param String nonce
 @param LocalizationSupport localizer
 @param Person person
 
-@template.layout.Layout(localizer = localizer, currentPath = "/person", content = @`
+@template.layout.Layout(nonce = nonce, localizer = localizer, currentPath = "/person", content = @`
     <div class="stack">
         <h2 class="text-3">Add person</h2>
         @if(person == null)

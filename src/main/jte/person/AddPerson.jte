@@ -3,11 +3,12 @@
 @import org.springframework.validation.BindingResult
 @import org.springframework.validation.FieldError
 
+@param String nonce
 @param LocalizationSupport localizer
 @param Person person
 @param BindingResult result
 
-@template.layout.Layout(localizer = localizer, currentPath = "/add-person", content = @`
+@template.layout.Layout(nonce = nonce, localizer = localizer, currentPath = "/add-person", content = @`
     <div class="stack">
         <h2 class="text-3">Add person</h2>
         <form action="/add-person" method="post" class="box stack">

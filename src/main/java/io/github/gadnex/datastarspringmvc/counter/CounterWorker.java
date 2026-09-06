@@ -1,7 +1,7 @@
 package io.github.gadnex.datastarspringmvc.counter;
 
-import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.PatchMode;
+import io.github.gadnex.jtedatastar.sse.Datastar;
+import io.github.gadnex.jtedatastar.sse.PatchMode;
 import io.micrometer.core.annotation.Timed;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

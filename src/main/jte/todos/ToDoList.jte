@@ -3,11 +3,12 @@
 @import org.springframework.validation.BindingResult
 @import java.util.Collection
 
+@param String nonce
 @param LocalizationSupport localizer
 @param BindingResult result
 @param Collection<ToDo> todos
 
-@template.layout.Layout(localizer = localizer, currentPath = "/todos", content = @`
+@template.layout.Layout(nonce = nonce, localizer = localizer, currentPath = "/todos", content = @`
     <div class="stack">
         <h2 class="text-3">${localizer.localize("page.Todos")}</h2>
         <div data-init="@get('/todos/connect')"></div>

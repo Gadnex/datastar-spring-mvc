@@ -4,6 +4,10 @@ spring:
   threads:
     virtual:
       enabled: true
+  web:
+    resources:
+      cache:
+        period: 86400
 
 server:
   port: 8080
@@ -32,6 +36,13 @@ gg:
     use-precompiled-templates: true
     localizer:
       inject: true
+
+datastar:
+  sse:
+    enabled: true
+  csp:
+    enabled: true
+    csp-header: true
 
 logging:
   pattern:

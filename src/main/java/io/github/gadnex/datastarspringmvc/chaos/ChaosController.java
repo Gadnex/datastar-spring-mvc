@@ -1,6 +1,6 @@
 package io.github.gadnex.datastarspringmvc.chaos;
 
-import io.github.gadnex.jtedatastar.Datastar;
+import io.github.gadnex.jtedatastar.sse.Datastar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;

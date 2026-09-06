@@ -1,7 +1,7 @@
 package io.github.gadnex.datastarspringmvc.todos;
 
-import io.github.gadnex.jtedatastar.Datastar;
-import io.github.gadnex.jtedatastar.PatchMode;
+import io.github.gadnex.jtedatastar.sse.Datastar;
+import io.github.gadnex.jtedatastar.sse.PatchMode;
 import jakarta.validation.Valid;
 import java.util.*;
 import java.util.concurrent.ExecutorService;

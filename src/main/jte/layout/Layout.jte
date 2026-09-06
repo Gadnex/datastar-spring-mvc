@@ -1,12 +1,13 @@
 @import gg.jte.Content
 @import gg.jte.support.LocalizationSupport
 
+@param String nonce
 @param LocalizationSupport localizer
 @param String currentPath
 @param Content content 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-nonce="${nonce}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>

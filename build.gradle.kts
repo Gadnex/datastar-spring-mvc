@@ -34,7 +34,7 @@ repositories {
 
 val jteVersion = "3.2.4"
 val jteLocalizerVersion = "1.0.3"
-val jteDatastarVersion = "0.3.4"
+val jteDatastarVersion = "0.3.5"
 val webjarsLocatorLiteVersion = "1.1.4"
 val howlerVersion = "2.2.4"
 

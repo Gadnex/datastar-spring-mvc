@@ -1,6 +1,6 @@
 package io.github.gadnex.datastarspringmvc.counter;
 
-import io.github.gadnex.jtedatastar.Datastar;
+import io.github.gadnex.jtedatastar.sse.Datastar;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,8 +1,9 @@
 @import gg.jte.support.LocalizationSupport
 
+@param String nonce
 @param LocalizationSupport localizer
 
-@template.layout.Layout(localizer = localizer, currentPath = "/", content = @`
+@template.layout.Layout(nonce = nonce, localizer = localizer, currentPath = "/", content = @`
     <div class="stack">
         <div class="cluster main-space-between cross-baseline">
             <h2 class="text-layout text-3" data-signals="{
