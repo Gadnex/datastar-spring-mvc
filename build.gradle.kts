@@ -91,6 +91,10 @@ tasks.withType<Test> {
     }
 }
 
+tasks.bootRun {
+    systemProperty("spring.profiles.active", "local")
+}
+
 tasks.bootBuildImage {
     imageName.set("gadnex/${rootProject.name}:${project.version}")
     environment.put("BP_JVM_VERSION", "25")

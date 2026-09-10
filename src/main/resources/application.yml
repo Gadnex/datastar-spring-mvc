@@ -15,21 +15,6 @@ server:
 management:
   server:
     port: 9080
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true
-  info:
-    java.enabled: true
-    env.enabled: true
-  observations:
-    annotations:
-      enabled: true
 
 gg:
   jte:
