@@ -8,7 +8,7 @@ plugins {
     id("io.spring.nullability") version "0.0.16"
     id("gg.jte.gradle") version "3.2.4"
     id("com.diffplug.spotless") version "8.10.2"
-    id("pl.allegro.tech.build.axion-release") version "1.21.3"
+    id("pl.allegro.tech.build.axion-release") version "1.21.4"
 }
 
 scmVersion {
@@ -35,7 +35,7 @@ repositories {
 val jteVersion = "3.2.4"
 val jteLocalizerVersion = "1.0.3"
 val jteDatastarVersion = "0.3.5"
-val webjarsLocatorLiteVersion = "1.1.4"
+val webjarsLocatorLiteVersion = "1.1.5"
 val howlerVersion = "2.2.4"
 
 dependencies {
@@ -103,7 +103,7 @@ tasks.bootBuildImage {
 
 graalvmNative {
     metadataRepository {
-        version.set("1.0.14")
+        version.set("1.0.16")
     }
 }
 
